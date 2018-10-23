@@ -41,5 +41,8 @@ public class ConnectTODB {
         collectionForDoc.insertOne(docForSet);
     }
 
+    public void deleteDocument(MongoCollection<Document> collectionForDoc, Document docForDel){
+        collectionForDoc.deleteOne(docForDel);
+    }
     //TODO: Reszta funkcji oraz zabezpieczeń
 }
