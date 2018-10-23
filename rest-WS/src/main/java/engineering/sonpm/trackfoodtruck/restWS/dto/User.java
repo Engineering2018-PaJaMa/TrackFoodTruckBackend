@@ -1,6 +1,6 @@
 package engineering.sonpm.trackfoodtruck.restWS.dto;
 
-import java.util.HashSet;
+import java.util.Set;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,5 +24,5 @@ public class User
 
 	private int age;
 
-	private HashSet favouriteFoodTrucks;
+	private Set<String> favouriteFoodTrucks;
 }
