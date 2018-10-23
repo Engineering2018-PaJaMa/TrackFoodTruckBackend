@@ -8,19 +8,16 @@ import org.bson.Document;
 
 public class ConnectTODB {
 
-    private static MongoClient mongo;
+    private static MongoClient mongo = new MongoClient( "localhost" , 27017 );
     private static MongoCredential credential;
-    private static MongoDatabase database;
+    public static MongoDatabase database = mongo.getDatabase("TrackFoodTruck");
 
     public static void main( String args[] ) {
-        connectDataBase();
-
+        credentialsForDataBase();
+        listAllCollection();
     }
 
-    private static void connectDataBase(){
-
-        // Creating a Mongo client
-        mongo = new MongoClient( "localhost" , 27017 );
+    private static void credentialsForDataBase(){
 
         // Creating Credentials
         credential = MongoCredential.createCredential(
@@ -28,21 +25,24 @@ public class ConnectTODB {
                 "TrackFoodTruck",
                 "AdminFoodTrack".toCharArray());
         System.out.println("Connected to the database successfully");
-
-        // Accessing the database
-        database = mongo.getDatabase("TrackFoodTruck");
     }
 
     public MongoCollection<Document> getCollection(String collectionName){
         return database.getCollection(collectionName);
     }
 
-    public void setDocument (MongoCollection<Document> collectionForDoc, Document docForSet){
+    public static void setDocument(MongoCollection<Document> collectionForDoc, Document docForSet){
         collectionForDoc.insertOne(docForSet);
     }
 
-    public void deleteDocument(MongoCollection<Document> collectionForDoc, Document docForDel){
+    public static void deleteDocument(MongoCollection<Document> collectionForDoc, Document docForDel){
         collectionForDoc.deleteOne(docForDel);
+    }
+
+    private static void listAllCollection(){
+        for (String name : database.listCollectionNames()) {
+            System.out.println(name);
+        }
     }
     //TODO: Reszta funkcji oraz zabezpieczeń
 }
