@@ -1,32 +1,31 @@
 package engineering.sonpm.trackfoodtruck.restWS;
 
-import static engineering.sonpm.trackfoodtruck.restWS.mongoDataBase.MongoDBController.database;
-import static engineering.sonpm.trackfoodtruck.restWS.mongoDataBase.MongoDBController.deleteDocument;
-import static engineering.sonpm.trackfoodtruck.restWS.mongoDataBase.MongoDBController.setDocument;
-
 import org.bson.Document;
 import org.junit.Test;
 
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+
+import engineering.sonpm.trackfoodtruck.restWS.mongoDataBase.MongoDBController;
 
 public class DataBaseTests
 {
-	//Testy działają na kolekcji: "Users" i przykładowym dokumencie\
+	private MongoDBController mongoDBController = new MongoDBController();
+	private MongoDatabase database = mongoDBController.getDatabase();
+	private MongoCollection<Document> usersCollection = database.getCollection("Users");
 
 	private Document testDocument = new Document().append("username", "newUsername").append("password", "test123").append("last_login", "May 14");
-
-	private MongoCollection<Document> usersCollection = database.getCollection("Users");
 
 	@Test
 	public void newDocumentTest()
 	{
 
-		setDocument(usersCollection, testDocument);
+		mongoDBController.setDocument(usersCollection, testDocument);
 	}
 
 	@Test
 	public void deleteDocumentTest()
 	{
-		deleteDocument(usersCollection, testDocument);
+		mongoDBController.deleteDocument(usersCollection, testDocument);
 	}
 }
