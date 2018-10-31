@@ -18,10 +18,10 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @RequestMapping(value = USER_PATH)
-public class UserController
+public class UserServiceImpl implements UserService
 {
 	@GetMapping(value = "/{id}")
-	public User user(@PathVariable("id") final String id)
+	public User getUser(@PathVariable("id") final String id)
 	{
 		log.info("Returning user with id {}", id);
 		return new User(id, "Name", "Surname", Integer.valueOf(id) * 10, new HashSet());
