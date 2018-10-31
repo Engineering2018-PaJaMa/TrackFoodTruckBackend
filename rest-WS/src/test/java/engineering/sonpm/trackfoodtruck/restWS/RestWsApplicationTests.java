@@ -11,7 +11,6 @@ import engineering.sonpm.trackfoodtruck.restWS.application.RestWsApplication;
 @SpringBootTest(classes = RestWsApplication.class)
 public class RestWsApplicationTests
 {
-
 	@Test
 	public void contextLoads()
 	{
