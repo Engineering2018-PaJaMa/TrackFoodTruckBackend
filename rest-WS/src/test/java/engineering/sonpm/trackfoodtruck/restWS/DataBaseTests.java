@@ -4,9 +4,9 @@ import com.mongodb.client.MongoCollection;
 import org.bson.Document;
 import org.junit.Test;
 
-import static engineering.sonpm.trackfoodtruck.restWS.mongoDataBase.ConnectTODB.database;
-import static engineering.sonpm.trackfoodtruck.restWS.mongoDataBase.ConnectTODB.setDocument;
-import static engineering.sonpm.trackfoodtruck.restWS.mongoDataBase.ConnectTODB.deleteDocument;
+import static engineering.sonpm.trackfoodtruck.restWS.mongoDataBase.MongoDBController.database;
+import static engineering.sonpm.trackfoodtruck.restWS.mongoDataBase.MongoDBController.setDocument;
+import static engineering.sonpm.trackfoodtruck.restWS.mongoDataBase.MongoDBController.deleteDocument;
 
 public class DataBaseTests {
 

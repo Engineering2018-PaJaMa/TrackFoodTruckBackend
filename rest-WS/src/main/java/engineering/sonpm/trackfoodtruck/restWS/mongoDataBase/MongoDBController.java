@@ -1,5 +1,6 @@
 package engineering.sonpm.trackfoodtruck.restWS.mongoDataBase;
 
+import com.mongodb.ServerAddress;
 import org.bson.Document;
 
 import com.mongodb.MongoClient;
@@ -7,25 +8,19 @@ import com.mongodb.MongoCredential;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
-public class ConnectTODB
+import java.lang.reflect.Array;
+import java.util.Arrays;
+
+public class MongoDBController
 {
 
-	private static MongoClient mongo = new MongoClient("localhost", 27017);
-	private static MongoCredential credential;
+	private static MongoCredential credential = MongoCredential.createCredential("admin", "TrackFoodTruck", "Admin123".toCharArray());
+	private static MongoClient mongo = new MongoClient(new ServerAddress("localhost", 27017),Arrays.asList(credential));
 	public static MongoDatabase database = mongo.getDatabase("TrackFoodTruck");
 
 	public static void main(String args[])
 	{
-		credentialsForDataBase();
 		listAllCollection();
-	}
-
-	private static void credentialsForDataBase()
-	{
-
-		// Creating Credentials
-		credential = MongoCredential.createCredential("FoodTrackMongo", "TrackFoodTruck", "AdminFoodTrack".toCharArray());
-		System.out.println("Connected to the database successfully");
 	}
 
 	public MongoCollection<Document> getCollection(String collectionName)
