@@ -3,6 +3,7 @@ package engineering.sonpm.trackfoodtruck.restWS.mongoDataBase;
 import java.util.Arrays;
 
 import org.bson.Document;
+import org.springframework.beans.factory.annotation.Value;
 
 import com.mongodb.MongoClient;
 import com.mongodb.MongoCredential;
@@ -10,33 +11,39 @@ import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
+import lombok.Getter;
+
 public class MongoDBController
 {
-	private static MongoCredential credential = MongoCredential.createCredential("admin", "TrackFoodTruck", "Admin123".toCharArray());
-	private static MongoClient mongo = new MongoClient(new ServerAddress("localhost", 27017), Arrays.asList(credential));
-	public static MongoDatabase database = mongo.getDatabase("TrackFoodTruck");
+	@Value("${mongodb.userName}")
+	private String userName;
+	@Value("${mongodb.databaseName}")
+	private String databaseName;
+	@Value("${mongodb.password}")
+	private String password;
 
-	public static void main(String args[])
-	{
-		listAllCollection();
-	}
+	private MongoCredential credential = MongoCredential.createCredential(userName, databaseName, password.toCharArray());
+	private MongoClient mongo = new MongoClient(new ServerAddress("localhost", 27017), Arrays.asList(credential));
+
+	@Getter
+	private MongoDatabase database = mongo.getDatabase(databaseName);
 
 	public MongoCollection<Document> getCollection(String collectionName)
 	{
 		return database.getCollection(collectionName);
 	}
 
-	public static void setDocument(MongoCollection<Document> collectionForDoc, Document docForSet)
+	public void setDocument(MongoCollection<Document> collectionForDoc, Document docForSet)
 	{
 		collectionForDoc.insertOne(docForSet);
 	}
 
-	public static void deleteDocument(MongoCollection<Document> collectionForDoc, Document docForDel)
+	public void deleteDocument(MongoCollection<Document> collectionForDoc, Document docForDel)
 	{
 		collectionForDoc.deleteOne(docForDel);
 	}
 
-	private static void listAllCollection()
+	private void listAllCollection()
 	{
 		for (String name : database.listCollectionNames())
 		{
