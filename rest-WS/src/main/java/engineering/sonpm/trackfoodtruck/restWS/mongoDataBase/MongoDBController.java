@@ -47,7 +47,7 @@ public class MongoDBController
 		return database.getCollection(collectionName);
 	}
 
-	public void setCollection(String collectionName)
+	private void setCollection(String collectionName)
 	{
 		database.createCollection(collectionName);
 	}
