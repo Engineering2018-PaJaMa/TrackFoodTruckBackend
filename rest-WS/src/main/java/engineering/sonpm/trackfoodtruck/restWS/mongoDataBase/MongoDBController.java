@@ -26,22 +26,6 @@ public class MongoDBController
 	@Getter
 	private MongoDatabase database = mongo.getDatabase("TrackFoodTruck");
 
-	public void initializeDataBase()
-	{
-		setCollection("Users");
-		setCollection("Restaurants");
-		setCollection("Reviews");
-
-		Document simpleDocument = new Document().append("username", "First user").append("password", "simplepassword123").append("last_login", "May 14");
-		setDocument(database.getCollection("Users"), simpleDocument);
-
-		Document restaurantDocument = new Document().append("Name", "Pyszna pizza u Bieńka")
-				.append("Description", "Tu jest pyszna pizza")
-				.append("Photo", "null for now")
-				.append("Rating", "5.5");
-		setDocument(database.getCollection("Restaurants"), restaurantDocument);
-	}
-
 	public MongoCollection<Document> getCollection(String collectionName)
 	{
 		return database.getCollection(collectionName);
@@ -69,5 +53,23 @@ public class MongoDBController
 			System.out.println(name);
 		}
 	}
+
+	//Nie potrzebne narazie ale może się przyda
+	/*
+	public void initializeDataBase()
+	{
+		setCollection("Users");
+		setCollection("Restaurants");
+		setCollection("Reviews");
+
+		Document simpleDocument = new Document().append("username", "First user").append("password", "simplepassword123").append("last_login", "May 14");
+		setDocument(database.getCollection("Users"), simpleDocument);
+
+		Document restaurantDocument = new Document().append("Name", "Pyszna pizza u Bieńka")
+				.append("Description", "Tu jest pyszna pizza")
+				.append("Photo", "null for now")
+				.append("Rating", "5.5");
+		setDocument(database.getCollection("Restaurants"), restaurantDocument);
+	}*/
 	//TODO: Reszta funkcji oraz zabezpieczeń
 }
