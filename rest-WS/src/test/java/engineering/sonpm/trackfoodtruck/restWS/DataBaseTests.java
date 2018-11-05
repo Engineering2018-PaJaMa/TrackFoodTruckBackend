@@ -10,6 +10,7 @@ import org.junit.Test;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
+
 import de.flapdoodle.embed.mongo.MongodExecutable;
 import de.flapdoodle.embed.mongo.MongodStarter;
 import de.flapdoodle.embed.mongo.config.IMongodConfig;
@@ -17,6 +18,7 @@ import de.flapdoodle.embed.mongo.config.MongodConfigBuilder;
 import de.flapdoodle.embed.mongo.config.Net;
 import de.flapdoodle.embed.mongo.distribution.Version;
 import de.flapdoodle.embed.process.runtime.Network;
+
 import engineering.sonpm.trackfoodtruck.restWS.mongoDataBase.MongoDBController;
 
 public class DataBaseTests
@@ -25,7 +27,6 @@ public class DataBaseTests
 	private MongoDatabase database = mongoDBController.getDatabase();
 	private MongoCollection<Document> usersCollection = database.getCollection("Users");
 	private MongodExecutable mongodExecutable;
-
 	private Document testDocument = new Document().append("username", "newUsername").append("password", "test123").append("last_login", "May 14");
 
 	@Before
@@ -46,6 +47,8 @@ public class DataBaseTests
 	{
 		mongodExecutable.stop();
 	}
+  
+	private Document testDocument = new Document().append("username", "newUsername").append("password", "test123").append("last_login", "May 14");
 
 	@Test
 	public void newDocumentTest()
