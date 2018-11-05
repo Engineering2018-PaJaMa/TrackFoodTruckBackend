@@ -1,12 +1,9 @@
 package engineering.sonpm.trackfoodtruck.restWS.mongoDataBase;
 
-import java.util.Arrays;
-
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Value;
 
 import com.mongodb.MongoClient;
-import com.mongodb.MongoCredential;
 import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -22,15 +19,21 @@ public class MongoDBController
 	@Value("${mongodb.password}")
 	private String password;
 
-	private MongoCredential credential = MongoCredential.createCredential(userName, databaseName, password.toCharArray());
-	private MongoClient mongo = new MongoClient(new ServerAddress("localhost", 27017), Arrays.asList(credential));
+	//TODO: Dokończyć credencials
+	//private MongoCredential credential = MongoCredential.createCredential("admin", "TrackFoodTruck", "Admin123".toCharArray());
+	private MongoClient mongo = new MongoClient(new ServerAddress("localhost", 27017)/*, Arrays.asList(credential)*/);
 
 	@Getter
-	private MongoDatabase database = mongo.getDatabase(databaseName);
+	private MongoDatabase database = mongo.getDatabase("TrackFoodTruck");
 
 	public MongoCollection<Document> getCollection(String collectionName)
 	{
 		return database.getCollection(collectionName);
+	}
+
+	private void setCollection(String collectionName)
+	{
+		database.createCollection(collectionName);
 	}
 
 	public void setDocument(MongoCollection<Document> collectionForDoc, Document docForSet)
@@ -50,5 +53,23 @@ public class MongoDBController
 			System.out.println(name);
 		}
 	}
+
+	//Nie potrzebne narazie ale może się przyda
+	/*
+	public void initializeDataBase()
+	{
+		setCollection("Users");
+		setCollection("Restaurants");
+		setCollection("Reviews");
+
+		Document simpleDocument = new Document().append("username", "First user").append("password", "simplepassword123").append("last_login", "May 14");
+		setDocument(database.getCollection("Users"), simpleDocument);
+
+		Document restaurantDocument = new Document().append("Name", "Pyszna pizza u Bieńka")
+				.append("Description", "Tu jest pyszna pizza")
+				.append("Photo", "null for now")
+				.append("Rating", "5.5");
+		setDocument(database.getCollection("Restaurants"), restaurantDocument);
+	}*/
 	//TODO: Reszta funkcji oraz zabezpieczeń
 }
