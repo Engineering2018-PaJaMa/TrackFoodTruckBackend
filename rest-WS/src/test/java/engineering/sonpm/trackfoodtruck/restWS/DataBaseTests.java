@@ -10,7 +10,6 @@ import org.junit.Test;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
-
 import de.flapdoodle.embed.mongo.MongodExecutable;
 import de.flapdoodle.embed.mongo.MongodStarter;
 import de.flapdoodle.embed.mongo.config.IMongodConfig;
@@ -18,11 +17,13 @@ import de.flapdoodle.embed.mongo.config.MongodConfigBuilder;
 import de.flapdoodle.embed.mongo.config.Net;
 import de.flapdoodle.embed.mongo.distribution.Version;
 import de.flapdoodle.embed.process.runtime.Network;
-
 import engineering.sonpm.trackfoodtruck.restWS.mongoDataBase.MongoDBController;
 
 public class DataBaseTests
 {
+	private static final String ip = "localhost";
+	private static final int port = 27017;
+
 	private MongoDBController mongoDBController = new MongoDBController();
 	private MongoDatabase database = mongoDBController.getDatabase();
 	private MongoCollection<Document> usersCollection = database.getCollection("Users");
@@ -32,9 +33,6 @@ public class DataBaseTests
 	@Before
 	public void setupDatabase() throws IOException
 	{
-		String ip = "localhost";
-		int port = 27017;
-
 		IMongodConfig mongodConfig = new MongodConfigBuilder().version(Version.Main.PRODUCTION).net(new Net(ip, port, Network.localhostIsIPv6())).build();
 
 		MongodStarter starter = MongodStarter.getDefaultInstance();
@@ -47,13 +45,10 @@ public class DataBaseTests
 	{
 		mongodExecutable.stop();
 	}
-  
-	private Document testDocument = new Document().append("username", "newUsername").append("password", "test123").append("last_login", "May 14");
 
 	@Test
 	public void newDocumentTest()
 	{
-
 		mongoDBController.setDocument(usersCollection, testDocument);
 	}
 

@@ -30,12 +30,12 @@ public class MongoDBController
 	{
 		return database.getCollection(collectionName);
 	}
-  
+
 	private void setCollection(String collectionName)
 	{
 		database.createCollection(collectionName);
 	}
-  
+
 	public void setDocument(MongoCollection<Document> collectionForDoc, Document docForSet)
 	{
 		collectionForDoc.insertOne(docForSet);
