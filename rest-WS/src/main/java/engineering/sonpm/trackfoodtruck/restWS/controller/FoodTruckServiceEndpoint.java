@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @RequestMapping(value = FOOD_TRUCK_PATH)
-public class FoodTruckServiceImpl implements FoodTruckService
+public class FoodTruckServiceEndpoint implements FoodTruckService
 {
 	@GetMapping(value = "/{id}")
 	@Override

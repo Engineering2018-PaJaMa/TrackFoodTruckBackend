@@ -7,5 +7,7 @@ import engineering.sonpm.trackfoodtruck.restWS.dto.User;
  */
 public interface UserService
 {
-	User getUser(final String id);
+	User get(final String id);
+
+	User create(final String id);
 }
