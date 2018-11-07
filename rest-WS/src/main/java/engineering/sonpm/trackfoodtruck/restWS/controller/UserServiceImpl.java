@@ -1,29 +1,27 @@
 package engineering.sonpm.trackfoodtruck.restWS.controller;
 
-import static engineering.sonpm.trackfoodtruck.restWS.Constants.USER_PATH;
+import java.time.LocalDate;
 
-import java.util.HashSet;
-
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.bson.Document;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import engineering.sonpm.trackfoodtruck.restWS.dto.User;
-import lombok.extern.slf4j.Slf4j;
+import engineering.sonpm.trackfoodtruck.restWS.mongoDataBase.MongoDBController;
 
 /**
- * Created by Paweł Szopa on 23/10/2018
+ * Created by Paweł Szopa on 06/11/2018
  */
-@Slf4j
-@RestController
-@RequestMapping(value = USER_PATH)
-public class UserServiceImpl implements UserService
+@Component
+public class UserServiceImpl
 {
-	@GetMapping(value = "/{id}")
-	public User getUser(@PathVariable("id") final String id)
+	@Autowired
+	MongoDBController mongoDBController;
+
+	public void createUser(final User user)
 	{
-		log.info("Returning user with id {}", id);
-		return new User(id, "Name", "Surname", Integer.valueOf(id) * 10, new HashSet());
+		Document document = new Document().append("username", user.getUsername()).append("password", user.getPassword()).append("lastlogin", LocalDate.now());
+
+		mongoDBController.setDocument(mongoDBController.getCollection("Users"), document);
 	}
 }

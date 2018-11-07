@@ -17,12 +17,11 @@ public class User
 {
 	@NonNull
 	private String id;
-
+	private String username;
+	private String password;
+	private String lastlogin;
 	private String name;
-
 	private String surname;
-
 	private int age;
-
 	private Set<String> favouriteFoodTrucks;
 }

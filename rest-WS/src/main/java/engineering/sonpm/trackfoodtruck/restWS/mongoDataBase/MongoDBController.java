@@ -2,24 +2,32 @@ package engineering.sonpm.trackfoodtruck.restWS.mongoDataBase;
 
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import com.mongodb.MongoClient;
 import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@Component
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class MongoDBController
 {
-	@Value("${mongodb.userName}")
+	@Value("${mongodb.username}")
 	private String userName;
-	@Value("${mongodb.databaseName}")
+	@Value("${mongodb.database}")
 	private String databaseName;
 	@Value("${mongodb.password}")
 	private String password;
 
-	//TODO: Dokończyć credencials
+	//TODO: Dokończyć credentials
 	//private MongoCredential credential = MongoCredential.createCredential("admin", "TrackFoodTruck", "Admin123".toCharArray());
 	private MongoClient mongo = new MongoClient(new ServerAddress("localhost", 27017)/*, Arrays.asList(credential)*/);
 
