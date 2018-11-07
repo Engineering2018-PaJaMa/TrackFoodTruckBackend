@@ -24,15 +24,20 @@ public class DataBaseTests
 	private static final String ip = "localhost";
 	private static final int port = 27017;
 
-	private MongoDBController mongoDBController = new MongoDBController();
-	private MongoDatabase database = mongoDBController.getDatabase();
-	private MongoCollection<Document> usersCollection = database.getCollection("Users");
+	private MongoDBController mongoDBController;
+	private MongoDatabase database;
+	private MongoCollection<Document> usersCollection;
 	private MongodExecutable mongodExecutable;
 	private Document testDocument = new Document().append("username", "newUsername").append("password", "test123").append("last_login", "May 14");
 
 	@Before
 	public void setupDatabase() throws IOException
 	{
+		mongoDBController = new MongoDBController();
+		mongoDBController.setUpConnection();
+		database = mongoDBController.getDatabase();
+		usersCollection = database.getCollection("Users");
+
 		IMongodConfig mongodConfig = new MongodConfigBuilder().version(Version.Main.PRODUCTION).net(new Net(ip, port, Network.localhostIsIPv6())).build();
 
 		MongodStarter starter = MongodStarter.getDefaultInstance();

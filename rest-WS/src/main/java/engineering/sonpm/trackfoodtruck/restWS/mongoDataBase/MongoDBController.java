@@ -29,10 +29,16 @@ public class MongoDBController
 
 	//TODO: Dokończyć credentials
 	//private MongoCredential credential = MongoCredential.createCredential("admin", "TrackFoodTruck", "Admin123".toCharArray());
-	private MongoClient mongo = new MongoClient(new ServerAddress("localhost", 27017)/*, Arrays.asList(credential)*/);
+	private MongoClient mongo;
 
 	@Getter
-	private MongoDatabase database = mongo.getDatabase("TrackFoodTruck");
+	private MongoDatabase database;
+
+	public void setUpConnection()
+	{
+		mongo = new MongoClient(new ServerAddress("localhost", 27017));
+		database = mongo.getDatabase("TrackFoodTruck");
+	}
 
 	public MongoCollection<Document> getCollection(String collectionName)
 	{
