@@ -22,6 +22,7 @@ public class UserServiceImpl
 	{
 		Document document = new Document().append("username", user.getUsername()).append("password", user.getPassword()).append("lastlogin", LocalDate.now());
 
+		mongoDBController.setUpConnection();
 		mongoDBController.setDocument(mongoDBController.getCollection("Users"), document);
 	}
 }
