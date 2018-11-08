@@ -1,5 +1,7 @@
 package engineering.sonpm.trackfoodtruck.restWS.controller.foodTrack;
 
+import org.bson.Document;
+
 import engineering.sonpm.trackfoodtruck.restWS.dto.FoodTruck;
 
 /**
@@ -7,7 +9,7 @@ import engineering.sonpm.trackfoodtruck.restWS.dto.FoodTruck;
  */
 public interface FoodTruckService
 {
-	FoodTruck getFoodTruck(final String id);
+	Document getFoodTruck(final String id);
 
 	FoodTruck setFoodTrack(final String id);
 }

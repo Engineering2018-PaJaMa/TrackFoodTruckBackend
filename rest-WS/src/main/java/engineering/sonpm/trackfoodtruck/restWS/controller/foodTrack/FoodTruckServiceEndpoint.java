@@ -2,6 +2,7 @@ package engineering.sonpm.trackfoodtruck.restWS.controller.foodTrack;
 
 import static engineering.sonpm.trackfoodtruck.restWS.Constants.FOOD_TRUCK_PATH;
 
+import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,19 +26,10 @@ public class FoodTruckServiceEndpoint implements FoodTruckService
 
 	@GetMapping(value = "/{id}")
 	@Override
-	public FoodTruck getFoodTruck(@PathVariable("id") final String id)
+	public Document getFoodTruck(@PathVariable("id") final String id)
 	{
 		log.info("Returning foodtrack with id {}", id);
-		return new FoodTruck(
-				id,
-				"FoodTruckName",
-				"FoodTruckOwner",
-				"Delicious",
-				"QuickTastyNotSoCheap",
-				new Location("PL", "Łódź", 10, 20),
-				"Url to photo",
-				5.5,
-				id + "FoodTruckName");
+		return foodTruckService.getFoodtruck(id);
 	}
 
 	@GetMapping(value = "/{id}")
