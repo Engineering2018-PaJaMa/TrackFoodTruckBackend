@@ -28,7 +28,16 @@ public class FoodTruckServiceEndpoint implements FoodTruckService
 	public FoodTruck getFoodTruck(@PathVariable("id") final String id)
 	{
 		log.info("Returning foodtrack with id {}", id);
-		return new FoodTruck(id, "FoodTruckName", "FoodTruckOwner", "Delicious", "QuickTastyNotSoCheap", new Location("PL", "Łódź", 10, 20));
+		return new FoodTruck(
+				id,
+				"FoodTruckName",
+				"FoodTruckOwner",
+				"Delicious",
+				"QuickTastyNotSoCheap",
+				new Location("PL", "Łódź", 10, 20),
+				"Url to photo",
+				5.5,
+				id + "FoodTruckName");
 	}
 
 	@GetMapping(value = "/{id}")
