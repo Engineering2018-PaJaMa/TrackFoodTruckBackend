@@ -74,9 +74,6 @@ public class DataBaseTests
 	public void newDocumentTest()
 	{
 		mongoDBController.setDocument(usersCollection, testDocument);
-		mongoDBController.setDocument(restaurantsCollection, testRestaurant);
-		mongoDBController.setDocument(reviewsCollection, testReview1);
-		mongoDBController.setDocument(reviewsCollection, testReview2);
 	}
 
 	@Test
@@ -86,8 +83,13 @@ public class DataBaseTests
 	}
 
 	@Test
-	public void showReviews()
+	public void showReviewsAndRestaurant()
 	{
+		mongoDBController.setDocument(restaurantsCollection, testRestaurant);
+		mongoDBController.setDocument(reviewsCollection, testReview1);
+		mongoDBController.setDocument(reviewsCollection, testReview2);
+
+		System.out.println(mongoDBController.getRestaurant(restaurantsCollection, "U Benka"));
 		System.out.println(mongoDBController.showAllReviews(reviewsCollection, "U Benka"));
 	}
 }
