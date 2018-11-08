@@ -1,4 +1,4 @@
-package engineering.sonpm.trackfoodtruck.restWS.controller;
+package engineering.sonpm.trackfoodtruck.restWS.controller.user;
 
 import static engineering.sonpm.trackfoodtruck.restWS.Constants.USER_PATH;
 

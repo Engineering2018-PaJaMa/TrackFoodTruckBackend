@@ -1,4 +1,4 @@
-package engineering.sonpm.trackfoodtruck.restWS.controller;
+package engineering.sonpm.trackfoodtruck.restWS.controller.user;
 
 import java.time.LocalDate;
 
