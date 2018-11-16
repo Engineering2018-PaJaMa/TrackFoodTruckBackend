@@ -4,9 +4,13 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>engineering.sonpm.trackfoodtruck</groupId>
-	<artifactId>track-food-truck-rest-WS</artifactId>
+	<artifactId>track-food-truck</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<modules>
+		<module>restaurant</module>
+		<module>user</module>
+	</modules>
+	<packaging>pom</packaging>
 
 	<name>track-food-truck-rest-WS</name>
 
@@ -31,7 +35,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
