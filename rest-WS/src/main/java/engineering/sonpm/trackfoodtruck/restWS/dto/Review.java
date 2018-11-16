@@ -15,10 +15,10 @@ public class Review
 
 	private String body;
 
-	private Integer rating;
+	private Double rating;
 
-	private String author_name;
+	private String authorName;
 
-	private String rest_id;
+	private String restId;
 
 }
