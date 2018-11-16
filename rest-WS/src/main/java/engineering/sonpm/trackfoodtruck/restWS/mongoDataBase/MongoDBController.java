@@ -63,13 +63,8 @@ public class MongoDBController
 
 	public Document getRestaurant(MongoCollection<Document> collectionForDoc, String restaurantName)
 	{
-		Document docToSend = new Document();
 		FindIterable<Document> documents = collectionForDoc.find(eq("Name", restaurantName));
-		for (Document document : documents)
-		{
-			docToSend = document;
-		}
-		return docToSend;
+		return documents.first();
 	}
 
 	public void deleteDocument(MongoCollection<Document> collectionForDoc, Document docForDel)
