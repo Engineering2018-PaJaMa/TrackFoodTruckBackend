@@ -9,7 +9,7 @@ import backend.application.TrackFoodTruckApplication;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = TrackFoodTruckApplication.class)
-public class RestWsApplicationTests
+public class TrackFoodTruckApplicationTest
 {
 	@Test
 	public void contextLoads()

@@ -1,4 +1,4 @@
-package backend.controller;
+package backend.controller.user;
 
 import backend.dto.User;
 
