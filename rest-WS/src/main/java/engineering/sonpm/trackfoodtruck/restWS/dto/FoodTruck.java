@@ -25,4 +25,10 @@ public class FoodTruck
 	private String description;
 
 	private Location location;
+
+	private String photo;
+
+	private Double raiting;
+
+	private String reviews;
 }

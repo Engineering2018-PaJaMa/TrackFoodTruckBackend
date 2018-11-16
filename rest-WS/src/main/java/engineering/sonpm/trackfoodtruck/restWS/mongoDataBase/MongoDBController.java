@@ -1,11 +1,17 @@
 package engineering.sonpm.trackfoodtruck.restWS.mongoDataBase;
 
+import static com.mongodb.client.model.Filters.eq;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.mongodb.MongoClient;
 import com.mongodb.ServerAddress;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
@@ -55,12 +61,32 @@ public class MongoDBController
 		collectionForDoc.insertOne(docForSet);
 	}
 
+	public Document getRestaurant(MongoCollection<Document> collectionForDoc, String restaurantName)
+	{
+		FindIterable<Document> documents = collectionForDoc.find(eq("Name", restaurantName));
+		return documents.first();
+	}
+
 	public void deleteDocument(MongoCollection<Document> collectionForDoc, Document docForDel)
 	{
 		collectionForDoc.deleteOne(docForDel);
 	}
 
-	private void listAllCollection()
+	public List<Document> showAllReviews(MongoCollection<Document> collectionForDoc, String restaurantName)
+	{
+
+		List<Document> arrayToSend = new ArrayList<Document>();
+
+		FindIterable<Document> goodReviews = collectionForDoc.find(eq("rest_id", restaurantName));
+		for (Document reviews : goodReviews)
+		{
+			arrayToSend.add(reviews);
+		}
+
+		return arrayToSend;
+	}
+
+	public void listAllCollection()
 	{
 		for (String name : database.listCollectionNames())
 		{
