@@ -1,6 +1,7 @@
 package project.tft.restaurant.backend.controller.review;
 
-import static project.tft.user.backend.Constants.USER_PATH;
+
+import static project.tft.restaurant.backend.Constants.FOOD_TRUCK_PATH;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ import project.tft.restaurant.backend.dto.Review;
  */
 @Slf4j
 @RestController
-@RequestMapping(value = USER_PATH)
+@RequestMapping(value = FOOD_TRUCK_PATH)
 public class ReviewServiceEndpoint implements ReviewService
 {
 	@Autowired

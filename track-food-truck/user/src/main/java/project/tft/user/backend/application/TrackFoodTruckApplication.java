@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(basePackages = "project.tft")
+@ComponentScan(basePackages = {"project.tft.user.backend", "project.tft.restaurant.backend"})
 public class TrackFoodTruckApplication
 {
 	public static void main(String[] args)

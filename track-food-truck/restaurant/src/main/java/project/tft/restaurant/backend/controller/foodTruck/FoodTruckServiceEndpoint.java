@@ -1,6 +1,6 @@
 package project.tft.restaurant.backend.controller.foodTruck;
 
-import static project.tft.user.backend.Constants.FOOD_TRUCK_PATH;
+import static project.tft.restaurant.backend.Constants.FOOD_TRUCK_PATH;
 
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.extern.slf4j.Slf4j;
 import project.tft.restaurant.backend.dto.FoodTruck;
 import project.tft.restaurant.backend.dto.Location;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * Created by Paweł Szopa on 31/10/2018
