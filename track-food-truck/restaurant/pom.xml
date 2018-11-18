@@ -12,15 +12,12 @@
 	<groupId>engineering.sonpm.trackfoodtruck</groupId>
 	<artifactId>restaurant</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	
+
 	<dependencies>
 		<dependency>
-			<groupId>engineering.sonpm.trackfoodtruck</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>user</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-			<scope>provided</scope>
+			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
-
-
 </project>
