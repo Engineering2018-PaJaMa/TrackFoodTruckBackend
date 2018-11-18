@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 
 import com.mongodb.MongoClient;
 import com.mongodb.ServerAddress;
@@ -20,10 +20,10 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Repository
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Component
 public class MongoDBController
 {
 	@Value("${mongodb.username}")

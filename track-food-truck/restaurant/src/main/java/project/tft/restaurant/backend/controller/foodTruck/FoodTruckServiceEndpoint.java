@@ -6,6 +6,7 @@ import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,7 +23,7 @@ import project.tft.restaurant.backend.dto.Location;
 public class FoodTruckServiceEndpoint implements FoodTruckService
 {
 	@Autowired
-	FoodTrackImpl foodTruckService;
+	private FoodTrackImpl foodTruckService;
 
 	@GetMapping(value = "/{id}")
 	@Override
@@ -32,7 +33,7 @@ public class FoodTruckServiceEndpoint implements FoodTruckService
 		return foodTruckService.getFoodtruck(id);
 	}
 
-	@GetMapping(value = "/{id}")
+	@PutMapping(value = "/{id}")
 	@Override
 	public FoodTruck setFoodTrack(String id)
 	{

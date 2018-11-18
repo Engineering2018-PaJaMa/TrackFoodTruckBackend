@@ -11,7 +11,7 @@ import project.tft.user.backend.database.MongoDBController;
 public class FoodTrackImpl
 {
 	@Autowired
-	MongoDBController mongoDBController;
+	private MongoDBController mongoDBController;
 
 	public void createFoodtruck(final FoodTruck foodTruck)
 	{

@@ -1,5 +1,7 @@
 package project.tft.user.backend.controller;
 
+import static project.tft.user.backend.Constants.USER_PATH;
+
 import java.time.LocalDate;
 import java.util.HashSet;
 
@@ -10,20 +12,19 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import project.tft.user.backend.Constants;
-import project.tft.user.backend.dto.User;
 import lombok.extern.slf4j.Slf4j;
+import project.tft.user.backend.dto.User;
 
 /**
  * Created by Paweł Szopa on 23/10/2018
  */
 @Slf4j
 @RestController
-@RequestMapping(value = Constants.USER_PATH)
+@RequestMapping(value = USER_PATH)
 public class UserServiceEndpoint implements UserService
 {
 	@Autowired
-	UserServiceImpl userService;
+	private UserServiceImpl userService;
 
 	@GetMapping(value = "/{id}")
 	public User get(@PathVariable("id") final String id)

@@ -16,7 +16,7 @@ import project.tft.user.backend.database.MongoDBController;
 public class ReviewServiceImpl
 {
 	@Autowired
-	MongoDBController mongoDBController;
+	private MongoDBController mongoDBController;
 
 	public void createReview(final Review review)
 	{
