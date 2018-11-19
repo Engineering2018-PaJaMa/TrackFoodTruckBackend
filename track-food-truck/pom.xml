@@ -9,6 +9,7 @@
 	<modules>
 		<module>restaurant</module>
 		<module>user</module>
+		<module>app</module>
 	</modules>
 	<packaging>pom</packaging>
 
@@ -25,7 +26,7 @@
 		<java.version>10</java.version>
 		<maven.compiler.source>10</maven.compiler.source>
 		<maven.compiler.target>10</maven.compiler.target>
-		<start-class>backend.application.TrackFoodTruckApplication</start-class>
+		<start-class>project.tft.app.TrackFoodTruckApplication</start-class>
 	</properties>
 
 	<dependencies>

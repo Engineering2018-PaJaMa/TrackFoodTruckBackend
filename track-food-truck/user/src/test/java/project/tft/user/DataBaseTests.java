@@ -10,7 +10,6 @@ import org.junit.Test;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
-import project.tft.user.backend.database.MongoDBController;
 import de.flapdoodle.embed.mongo.MongodExecutable;
 import de.flapdoodle.embed.mongo.MongodStarter;
 import de.flapdoodle.embed.mongo.config.IMongodConfig;
@@ -18,11 +17,13 @@ import de.flapdoodle.embed.mongo.config.MongodConfigBuilder;
 import de.flapdoodle.embed.mongo.config.Net;
 import de.flapdoodle.embed.mongo.distribution.Version;
 import de.flapdoodle.embed.process.runtime.Network;
+import project.tft.user.backend.database.MongoDBController;
 
 public class DataBaseTests
 {
 	private static final String ip = "localhost";
-	private static final int port = 27017;
+	//Test port has to be different than default one so in case local instance is running exception won't shut it down (Default is 27017)
+	private static final int port = 27000;
 
 	private MongoDBController mongoDBController;
 	private MongoDatabase database;
