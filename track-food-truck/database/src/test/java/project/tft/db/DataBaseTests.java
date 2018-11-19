@@ -1,4 +1,4 @@
-package project.tft.user;
+package project.tft.db;
 
 import java.io.IOException;
 
@@ -17,7 +17,6 @@ import de.flapdoodle.embed.mongo.config.MongodConfigBuilder;
 import de.flapdoodle.embed.mongo.config.Net;
 import de.flapdoodle.embed.mongo.distribution.Version;
 import de.flapdoodle.embed.process.runtime.Network;
-import project.tft.user.backend.database.MongoDBController;
 
 public class DataBaseTests
 {

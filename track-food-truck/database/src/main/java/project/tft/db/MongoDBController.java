@@ -1,4 +1,4 @@
-package project.tft.user.backend.database;
+package project.tft.db;
 
 import static com.mongodb.client.model.Filters.eq;
 
