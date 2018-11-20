@@ -29,7 +29,7 @@ public class UserServiceEndpoint implements UserService
 	@Override
 	public project.tft.user.backend.dao.User login(@RequestBody @Valid final User user)
 	{
-		return null;
+		return userService.findUserInDatabase(user);
 	}
 
 	@PutMapping
