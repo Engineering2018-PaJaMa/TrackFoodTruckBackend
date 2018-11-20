@@ -4,8 +4,8 @@ import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import project.tft.db.MongoDBController;
 import project.tft.restaurant.backend.dto.FoodTruck;
-import project.tft.user.backend.database.MongoDBController;
 
 @Component
 public class FoodTrackImpl

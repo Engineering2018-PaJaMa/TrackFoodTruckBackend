@@ -10,6 +10,7 @@
 		<module>restaurant</module>
 		<module>user</module>
 		<module>app</module>
+		<module>database</module>
 	</modules>
 	<packaging>pom</packaging>
 

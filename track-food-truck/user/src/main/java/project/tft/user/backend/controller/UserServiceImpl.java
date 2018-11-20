@@ -6,7 +6,7 @@ import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import project.tft.user.backend.database.MongoDBController;
+import project.tft.db.MongoDBController;
 import project.tft.user.backend.dto.User;
 
 /**
@@ -16,7 +16,7 @@ import project.tft.user.backend.dto.User;
 public class UserServiceImpl
 {
 	@Autowired
-	MongoDBController mongoDBController;
+	private MongoDBController mongoDBController;
 
 	public void createUser(final User user)
 	{
