@@ -1,4 +1,3 @@
-# Before you push your changes
 ## If both goals aren't reached do NOT push it to the repo.
 `mvn clean install`
 
