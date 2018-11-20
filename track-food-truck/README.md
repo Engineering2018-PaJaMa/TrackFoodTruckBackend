@@ -2,4 +2,4 @@
 `mvn clean install`
 
 ## Run package
-`java -jar target/track-food-truck[version].jar`
+`java -jar app/target/app-exec.jar`

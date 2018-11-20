@@ -1,6 +1,6 @@
 package project.tft.user.backend.dao;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
@@ -28,5 +28,5 @@ public class User
 	private String name;
 	private String surname;
 	private String age;
-	private Set<String> favouriteFoodTrucks;
+	private List<String> favouriteFoodTrucks;
 }

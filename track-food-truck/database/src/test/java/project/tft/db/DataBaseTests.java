@@ -7,9 +7,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
-
 import de.flapdoodle.embed.mongo.MongodExecutable;
 import de.flapdoodle.embed.mongo.MongodStarter;
 import de.flapdoodle.embed.mongo.config.IMongodConfig;
@@ -25,9 +22,6 @@ public class DataBaseTests
 	private static final int port = 27000;
 
 	private MongoDBController mongoDBController;
-	private MongoCollection<Document> usersCollection;
-	private MongoCollection<Document> restaurantsCollection;
-	private MongoCollection<Document> reviewsCollection;
 	private MongodExecutable mongodExecutable;
 	private Document testDocument = new Document().append("login", "newUsername").append("password", "test123").append("last_login", "May 14");
 
@@ -50,11 +44,6 @@ public class DataBaseTests
 	public void setupDatabase() throws IOException
 	{
 		mongoDBController = new MongoDBController();
-		MongoDatabase database = mongoDBController.getDatabase();
-		usersCollection = database.getCollection("Users");
-		restaurantsCollection = database.getCollection("Restaurants");
-		reviewsCollection = database.getCollection("Reviews");
-
 		IMongodConfig mongodConfig = new MongodConfigBuilder().version(Version.Main.PRODUCTION).net(new Net(ip, port, Network.localhostIsIPv6())).build();
 
 		MongodStarter starter = MongodStarter.getDefaultInstance();
@@ -69,25 +58,22 @@ public class DataBaseTests
 	}
 
 	@Test
-	public void newDocumentTest()
+	public void insertTestUser()
 	{
-		mongoDBController.setDocument(usersCollection, testDocument);
+		mongoDBController.getDatabase().getCollection("Users").insertOne(testDocument);
 	}
 
 	@Test
-	public void deleteDocumentTest()
+	public void deleteTestUser()
 	{
-		mongoDBController.deleteDocument(usersCollection, testDocument);
+		mongoDBController.getDatabase().getCollection("Users").findOneAndDelete(testDocument);
 	}
 
 	@Test
-	public void showReviewsAndRestaurant()
+	public void insertTestRestaurantAndReviews()
 	{
-		mongoDBController.setDocument(restaurantsCollection, testRestaurant);
-		mongoDBController.setDocument(reviewsCollection, testReview1);
-		mongoDBController.setDocument(reviewsCollection, testReview2);
-
-		System.out.println(mongoDBController.getRestaurant(restaurantsCollection, "U Benka"));
-		System.out.println(mongoDBController.showAllReviews(reviewsCollection, "U Benka"));
+		mongoDBController.getDatabase().getCollection("Restaurants").insertOne(testRestaurant);
+		mongoDBController.getDatabase().getCollection("Reviews").insertOne(testReview1);
+		mongoDBController.getDatabase().getCollection("Reviews").insertOne(testReview2);
 	}
 }

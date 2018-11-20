@@ -1,15 +1,15 @@
 package project.tft.user.backend.converter;
 
-import java.util.Set;
-
 import org.bson.Document;
+import org.springframework.stereotype.Component;
 
 import project.tft.user.backend.dto.User;
 
 /**
  * Created by Paweł Szopa on 20/11/2018
  */
-public class UserConverter
+@Component
+public final class UserConverter
 {
 	public Document convert(final User user)
 	{
@@ -18,15 +18,12 @@ public class UserConverter
 				.append("email", user.getEmail());
 	}
 
-	public project.tft.user.backend.dao.User convert(final Document document)
+	public User convert(final Document document)
 	{
-		return new project.tft.user.backend.dao.User(
+		return new User(
 				document.get("login").toString(),
 				document.get("password").toString(),
-				document.get("email").toString(),
-				document.get("name").toString(),
-				document.get("surname").toString(),
-				document.get("age").toString(),
-				Set.of(document.get("favouriteFoodTrucks").toString()));
+				document.get("repPassword").toString(),
+				document.get("email").toString());
 	}
 }

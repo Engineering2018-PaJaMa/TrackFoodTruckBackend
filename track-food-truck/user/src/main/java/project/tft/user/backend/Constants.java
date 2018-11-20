@@ -5,5 +5,5 @@ package project.tft.user.backend;
  */
 public class Constants
 {
-	public static final String USER_PATH = "/tft/v1/user";
+	public static final String USER_PATH = "/tft/user";
 }

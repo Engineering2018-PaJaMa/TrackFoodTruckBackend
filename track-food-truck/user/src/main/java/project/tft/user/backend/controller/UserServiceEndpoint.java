@@ -27,15 +27,18 @@ public class UserServiceEndpoint implements UserService
 
 	@GetMapping
 	@Override
-	public project.tft.user.backend.dao.User login(@RequestBody @Valid final User user)
+	public User login(@RequestBody @Valid final User user)
 	{
+		log.info("Returning user {} from database.", user);
 		return userService.findUserInDatabase(user);
 	}
 
 	@PutMapping
 	@Override
-	public void register(@RequestBody @Valid final User user)
+	public User register(@RequestBody @Valid final User user)
 	{
+		log.info("Registering user {} in database.", user);
 		userService.registerUserInDatabase(user);
+		return user;
 	}
 }

@@ -21,10 +21,10 @@ public class UserServiceImpl
 
 	public void registerUserInDatabase(final User user)
 	{
-		mongoDBController.setDocument(mongoDBController.getCollection("Users"), converter.convert(user));
+		mongoDBController.getDatabase().getCollection("Users").insertOne(converter.convert(user));
 	}
 
-	public project.tft.user.backend.dao.User findUserInDatabase(final User user)
+	public User findUserInDatabase(final User user)
 	{
 		return converter.convert(mongoDBController.getDatabase().getCollection("Users").find(converter.convert(user)).first());
 	}
