@@ -25,12 +25,11 @@ public class DataBaseTests
 	private static final int port = 27000;
 
 	private MongoDBController mongoDBController;
-	private MongoDatabase database;
 	private MongoCollection<Document> usersCollection;
 	private MongoCollection<Document> restaurantsCollection;
 	private MongoCollection<Document> reviewsCollection;
 	private MongodExecutable mongodExecutable;
-	private Document testDocument = new Document().append("username", "newUsername").append("password", "test123").append("last_login", "May 14");
+	private Document testDocument = new Document().append("login", "newUsername").append("password", "test123").append("last_login", "May 14");
 
 	private Document testRestaurant = new Document().append("Name", "U Benka")
 			.append("Description", "Dobra pizza")
@@ -51,8 +50,7 @@ public class DataBaseTests
 	public void setupDatabase() throws IOException
 	{
 		mongoDBController = new MongoDBController();
-		mongoDBController.setUpConnection();
-		database = mongoDBController.getDatabase();
+		MongoDatabase database = mongoDBController.getDatabase();
 		usersCollection = database.getCollection("Users");
 		restaurantsCollection = database.getCollection("Restaurants");
 		reviewsCollection = database.getCollection("Reviews");

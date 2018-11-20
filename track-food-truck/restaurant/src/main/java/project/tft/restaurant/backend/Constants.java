@@ -5,6 +5,6 @@ package project.tft.restaurant.backend;
  */
 public class Constants
 {
-	public static final String FOOD_TRUCK_PATH = "/tft/foodtruck";
-	public static final String FOOD_TRUCK_REVIEW_PATH = "/tft/review";
+	public static final String FOOD_TRUCK_PATH = "/tft/v1/foodtruck";
+	public static final String FOOD_TRUCK_REVIEW_PATH = "/tft/v1/review";
 }

@@ -7,7 +7,7 @@ import project.tft.user.backend.dto.User;
  */
 public interface UserService
 {
-	User get(final String id);
+	void register(User user);
 
-	User create(final String id);
+	project.tft.user.backend.dao.User login(User user);
 }
