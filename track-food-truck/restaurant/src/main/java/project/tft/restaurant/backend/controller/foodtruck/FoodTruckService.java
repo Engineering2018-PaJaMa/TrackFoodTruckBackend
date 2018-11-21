@@ -1,4 +1,4 @@
-package project.tft.restaurant.backend.controller.truck;
+package project.tft.restaurant.backend.controller.foodtruck;
 
 import java.util.List;
 
