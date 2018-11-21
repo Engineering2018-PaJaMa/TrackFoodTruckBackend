@@ -4,11 +4,13 @@ import static project.tft.restaurant.backend.Constants.FOOD_TRUCK_REVIEW_PATH;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,20 +28,20 @@ public class ReviewServiceEndpoint implements ReviewService
 	@Autowired
 	ReviewServiceImpl reviewService;
 
-	@GetMapping(value = "/{id}")
-	public List<Document> getReviews(@PathVariable("id") final String id)
+	@PutMapping
+	@Override
+	public Review createReview(@RequestBody @Valid Review review)
 	{
-		log.info("Returning reviews for restaurant {}", id);
-		return reviewService.getAllReviews(id);
-	}
-
-	@PutMapping(value = "/{id}")
-	public Review createReview(@PathVariable("id") final String id)
-	{
-		log.info("Creating review with name: {}", id);
-		Review review = new Review(id, "EKSTRA PIZZA", "Bylem widziałem dobra pizza", 4.5, "Maciek");
-
+		log.info("Creating foodTruck review {} in database.", review);
 		reviewService.createReview(review);
 		return review;
+	}
+
+	@GetMapping
+	@Override
+	public List<Document> findReviews(@RequestBody final Review review)
+	{
+		log.info("Returning foodTruck {} reviews from database.", review.getRestaurantName());
+		return reviewService.getAllReviews(review.getRestaurantName());
 	}
 }

@@ -11,7 +11,7 @@ import project.tft.restaurant.backend.dto.Review;
  */
 public interface ReviewService
 {
-	List<Document> getReviews(final String id);
+	Review createReview(Review review);
 
-	Review createReview(final String id);
+	List<Document> findReviews(Review review);
 }

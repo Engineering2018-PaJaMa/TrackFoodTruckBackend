@@ -1,9 +1,10 @@
 package project.tft.restaurant.backend.dto;
 
+import javax.validation.constraints.NotNull;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 
 /**
  * Created by Paweł Szopa on 31/10/2018
@@ -13,22 +14,18 @@ import lombok.NonNull;
 @AllArgsConstructor
 public class FoodTruck
 {
-	@NonNull
-	private String id;
-
+	@NotNull
 	private String name;
 
-	private String owner;
+	@NotNull
+	private String cuisine;
 
-	private String typeOfFood;
-
+	@NotNull
 	private String description;
 
+	@NotNull
 	private Location location;
 
-	private String photo;
-
 	private Double rating;
-
-	private String reviews;
+	private String photo;
 }
