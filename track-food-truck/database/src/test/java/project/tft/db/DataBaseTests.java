@@ -17,7 +17,7 @@ import de.flapdoodle.embed.process.runtime.Network;
 
 public class DataBaseTests
 {
-	private static final String ip = "localhost";
+	private static final String host = "localhost";
 	//Test port has to be different than default one so in case local instance is running exception won't shut it down (Default is 27017)
 	private static final int port = 27000;
 
@@ -43,8 +43,8 @@ public class DataBaseTests
 	@Before
 	public void setupDatabase() throws IOException
 	{
-		mongoDBController = new MongoDBController();
-		IMongodConfig mongodConfig = new MongodConfigBuilder().version(Version.Main.PRODUCTION).net(new Net(ip, port, Network.localhostIsIPv6())).build();
+		mongoDBController = new MongoDBController(host, port, "TrackFoodTruck");
+		IMongodConfig mongodConfig = new MongodConfigBuilder().version(Version.Main.PRODUCTION).net(new Net(host, port, Network.localhostIsIPv6())).build();
 
 		MongodStarter starter = MongodStarter.getDefaultInstance();
 		mongodExecutable = starter.prepare(mongodConfig);

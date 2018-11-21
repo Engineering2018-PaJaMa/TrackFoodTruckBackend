@@ -1,17 +1,16 @@
 package project.tft.db;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.mongodb.MongoClient;
 import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoDatabase;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 
 @Data
-@AllArgsConstructor
 @Component
 public class MongoDBController
 {
@@ -20,9 +19,10 @@ public class MongoDBController
 	@Getter
 	private MongoDatabase database;
 
-	public MongoDBController()
+	public MongoDBController(
+			@Value("${mongodb.host}") final String host, @Value("${mongodb.port}") final int port, @Value("${mongodb.database.name}") final String name)
 	{
-		mongo = new MongoClient(new ServerAddress("localhost", 27017));
-		database = mongo.getDatabase("TrackFoodTruck");
+		mongo = new MongoClient(new ServerAddress(host, port));
+		database = mongo.getDatabase(name);
 	}
 }
