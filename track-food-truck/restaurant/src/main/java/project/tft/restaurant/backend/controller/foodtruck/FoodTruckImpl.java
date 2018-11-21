@@ -1,4 +1,4 @@
-package project.tft.restaurant.backend.controller.foodTruck;
+package project.tft.restaurant.backend.controller.foodtruck;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,7 @@ import project.tft.restaurant.backend.Converter;
 import project.tft.restaurant.backend.dto.FoodTruck;
 
 @Component
-public class FoodTrackImpl
+public class FoodTruckImpl
 {
 	@Autowired
 	private MongoDBController mongoDBController;
@@ -29,8 +29,20 @@ public class FoodTrackImpl
 
 	public List<Document> getFoodtruck(final Document foodTruck)
 	{
-		List<Document> list = new ArrayList<>();
 		FindIterable<Document> documentList = mongoDBController.getDatabase().getCollection("Restaurants").find(foodTruck);
+		List<Document> list = new ArrayList<>();
+
+		for (Document d : documentList)
+		{
+			list.add(d);
+		}
+		return list;
+	}
+
+	public List<Document> getAllFoodTrucks()
+	{
+		FindIterable<Document> documentList = mongoDBController.getDatabase().getCollection("Restaurants").find();
+		List<Document> list = new ArrayList<>();
 
 		for (Document d : documentList)
 		{
