@@ -1,12 +1,11 @@
 package project.tft.user.backend.controller;
 
-import java.time.LocalDate;
-
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import project.tft.db.MongoDBController;
+import project.tft.user.backend.converter.UserConverter;
 import project.tft.user.backend.dto.User;
 
 /**
@@ -18,11 +17,16 @@ public class UserServiceImpl
 	@Autowired
 	private MongoDBController mongoDBController;
 
-	public void createUser(final User user)
-	{
-		Document document = new Document().append("username", user.getUsername()).append("password", user.getPassword()).append("lastlogin", LocalDate.now());
+	@Autowired
+	private UserConverter converter;
 
-		mongoDBController.setUpConnection();
-		mongoDBController.setDocument(mongoDBController.getCollection("Users"), document);
+	public void registerUserInDatabase(final User user)
+	{
+		mongoDBController.getDatabase().getCollection("Users").insertOne(converter.convert(user));
+	}
+
+	public Document findUserInDatabase(final Document user)
+	{
+		return mongoDBController.getDatabase().getCollection("Users").find(user).first();
 	}
 }

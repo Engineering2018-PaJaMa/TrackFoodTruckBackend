@@ -13,5 +13,17 @@
 	<artifactId>database</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
+	<dependencies>
+		<dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongo-java-driver</artifactId>
+			<version>3.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>de.flapdoodle.embed</groupId>
+			<artifactId>de.flapdoodle.embed.mongo</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
 
 </project>

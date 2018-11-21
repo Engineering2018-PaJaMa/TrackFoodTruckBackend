@@ -2,13 +2,13 @@ package project.tft.user.backend.controller;
 
 import static project.tft.user.backend.Constants.USER_PATH;
 
-import java.time.LocalDate;
-import java.util.HashSet;
+import javax.validation.Valid;
 
+import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,19 +26,20 @@ public class UserServiceEndpoint implements UserService
 	@Autowired
 	private UserServiceImpl userService;
 
-	@GetMapping(value = "/{id}")
-	public User get(@PathVariable("id") final String id)
+	@PutMapping
+	@Override
+	public User registerUser(@RequestBody @Valid final User user)
 	{
-		log.info("Returning user with id {}", id);
-		return new User(id, "Username", "Password", LocalDate.now().toString(), "Name", "Surname", Integer.valueOf(id) * 10, new HashSet());
+		log.info("Registering user {} in database.", user);
+		userService.registerUserInDatabase(user);
+		return user;
 	}
 
-	@PutMapping(value = "/{id}")
-	public User create(@PathVariable("id") final String id)
+	@GetMapping
+	@Override
+	public Document loginUser(@RequestBody final Document user)
 	{
-		log.info("Creating user with id: {}", id);
-		User user = new User(id, "Username", "Password", LocalDate.now().toString(), "Name", "Surname", Integer.valueOf(id) * 10, new HashSet());
-		userService.createUser(user);
-		return user;
+		log.info("Returning user {} from database.", user);
+		return userService.findUserInDatabase(user);
 	}
 }

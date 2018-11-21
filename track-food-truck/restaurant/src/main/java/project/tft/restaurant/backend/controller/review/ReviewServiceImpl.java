@@ -1,10 +1,15 @@
 package project.tft.restaurant.backend.controller.review;
 
+import static com.mongodb.client.model.Filters.eq;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.mongodb.client.FindIterable;
 
 import project.tft.db.MongoDBController;
 import project.tft.restaurant.backend.dto.Review;
@@ -26,12 +31,18 @@ public class ReviewServiceImpl
 				.append("author_name", review.getAuthorName())
 				.append("rest_id", review.getRestaurantId());
 
-		mongoDBController.setUpConnection();
-		mongoDBController.setDocument(mongoDBController.getCollection("Reviews"), document);
+		mongoDBController.getDatabase().getCollection("Reviews").insertOne(document);
 	}
 
 	public List<Document> getAllReviews(final String restaurantName)
 	{
-		return mongoDBController.showAllReviews(mongoDBController.getCollection("Reviews"), restaurantName);
+		List<Document> list = new ArrayList<>();
+		FindIterable<Document> documentList = mongoDBController.getDatabase().getCollection("Reviews").find(eq("Name", restaurantName));
+
+		for (Document d : documentList)
+		{
+			list.add(d);
+		}
+		return list;
 	}
 }
