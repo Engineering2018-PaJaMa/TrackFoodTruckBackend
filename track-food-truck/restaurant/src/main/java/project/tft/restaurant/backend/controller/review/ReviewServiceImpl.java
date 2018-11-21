@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import com.mongodb.client.FindIterable;
 
 import project.tft.db.MongoDBController;
+import project.tft.restaurant.backend.Converter;
 import project.tft.restaurant.backend.dto.Review;
 
 /**
@@ -23,21 +24,18 @@ public class ReviewServiceImpl
 	@Autowired
 	private MongoDBController mongoDBController;
 
+	@Autowired
+	private Converter converter;
+
 	public void createReview(final Review review)
 	{
-		Document document = new Document().append("headline", review.getHeadline())
-				.append("body", review.getBody())
-				.append("rating", review.getRating())
-				.append("author_name", review.getAuthorName())
-				.append("rest_id", review.getRestaurantId());
-
-		mongoDBController.getDatabase().getCollection("Reviews").insertOne(document);
+		mongoDBController.getDatabase().getCollection("Reviews").insertOne(converter.covert(review));
 	}
 
 	public List<Document> getAllReviews(final String restaurantName)
 	{
+		FindIterable<Document> documentList = mongoDBController.getDatabase().getCollection("Reviews").find(eq("restaurantName", restaurantName));
 		List<Document> list = new ArrayList<>();
-		FindIterable<Document> documentList = mongoDBController.getDatabase().getCollection("Reviews").find(eq("Name", restaurantName));
 
 		for (Document d : documentList)
 		{

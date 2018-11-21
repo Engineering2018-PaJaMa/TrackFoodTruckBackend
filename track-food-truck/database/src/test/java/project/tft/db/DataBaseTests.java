@@ -23,22 +23,20 @@ public class DataBaseTests
 
 	private MongoDBController mongoDBController;
 	private MongodExecutable mongodExecutable;
-	private Document testDocument = new Document().append("login", "newUsername").append("password", "test123").append("last_login", "May 14");
 
-	private Document testRestaurant = new Document().append("Name", "U Benka")
-			.append("Description", "Dobra pizza")
-			.append("Photo", "http://balblabl")
-			.append("Rating", 5.1)
-			.append("Rest_ID", "U Benka")
-			.append("Reviews", "Reviews");
-	private Document testReview1 = new Document().append("headline", "EKSTRA PIZZA")
+	//Test documents
+	private Document testDocument = new Document("login", "login").append("password", "password").append("email", "email");
+
+	private Document location = new Document("country", "Polska").append("city", "Lodz").append("latitude", "11").append("longitude", "22");
+
+	private Document testRestaurant = new Document("name", "foodTruckName").append("cuisine", "foodTruckCuisine")
+			.append("description", "foodTruckDescription")
+			.append("location", location)
+			.append("rating", "5.5");
+
+	private Document testReview = new Document("restaurantName", "U Benka").append("headline", "EKSTRA PIZZA")
 			.append("body", "Bylem widziałem dobra pizza")
-			.append("rating", 4)
-			.append("rest_id", "U Benka");
-	private Document testReview2 = new Document().append("headline", "Słaba PIZZA")
-			.append("body", "Bylem widziałem zla pizza")
-			.append("rating", 1)
-			.append("rest_id", "U Benka");
+			.append("rating", 4).append("author", "JanuszWielki");
 
 	@Before
 	public void setupDatabase() throws IOException
@@ -73,7 +71,6 @@ public class DataBaseTests
 	public void insertTestRestaurantAndReviews()
 	{
 		mongoDBController.getDatabase().getCollection("Restaurants").insertOne(testRestaurant);
-		mongoDBController.getDatabase().getCollection("Reviews").insertOne(testReview1);
-		mongoDBController.getDatabase().getCollection("Reviews").insertOne(testReview2);
+		mongoDBController.getDatabase().getCollection("Reviews").insertOne(testReview);
 	}
 }

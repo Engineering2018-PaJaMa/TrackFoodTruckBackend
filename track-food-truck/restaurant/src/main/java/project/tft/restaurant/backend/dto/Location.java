@@ -13,10 +13,7 @@ import lombok.NoArgsConstructor;
 public class Location
 {
 	private String country;
-
 	private String city;
-
 	private double latitude;
-
 	private double longitude;
 }
