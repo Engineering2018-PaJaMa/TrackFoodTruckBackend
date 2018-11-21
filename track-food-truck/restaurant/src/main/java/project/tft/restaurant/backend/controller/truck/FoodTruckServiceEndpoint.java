@@ -1,4 +1,4 @@
-package project.tft.restaurant.backend.controller.foodtruck;
+package project.tft.restaurant.backend.controller.truck;
 
 import static project.tft.restaurant.backend.Constants.FOOD_TRUCK_PATH;
 
