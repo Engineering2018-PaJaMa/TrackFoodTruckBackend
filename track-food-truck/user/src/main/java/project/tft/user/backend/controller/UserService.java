@@ -1,5 +1,7 @@
 package project.tft.user.backend.controller;
 
+import org.bson.Document;
+
 import project.tft.user.backend.dto.User;
 
 /**
@@ -7,7 +9,7 @@ import project.tft.user.backend.dto.User;
  */
 public interface UserService
 {
-	User register(User user);
+	User registerUser(User user);
 
-	User login(User user);
+	Document loginUser(Document user);
 }

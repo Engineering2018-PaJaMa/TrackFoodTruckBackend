@@ -13,17 +13,6 @@ public final class UserConverter
 {
 	public Document convert(final User user)
 	{
-		return new Document("login", user.getLogin()).append("password", user.getPassword())
-				.append("repPassword", user.getRepPassword())
-				.append("email", user.getEmail());
-	}
-
-	public User convert(final Document document)
-	{
-		return new User(
-				document.get("login").toString(),
-				document.get("password").toString(),
-				document.get("repPassword").toString(),
-				document.get("email").toString());
+		return new Document("loginUser", user.getLogin()).append("password", user.getPassword()).append("email", user.getEmail());
 	}
 }

@@ -1,5 +1,6 @@
 package project.tft.user.backend.controller;
 
+import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,8 +25,8 @@ public class UserServiceImpl
 		mongoDBController.getDatabase().getCollection("Users").insertOne(converter.convert(user));
 	}
 
-	public User findUserInDatabase(final User user)
+	public Document findUserInDatabase(final Document user)
 	{
-		return converter.convert(mongoDBController.getDatabase().getCollection("Users").find(converter.convert(user)).first());
+		return mongoDBController.getDatabase().getCollection("Users").find(user).first();
 	}
 }

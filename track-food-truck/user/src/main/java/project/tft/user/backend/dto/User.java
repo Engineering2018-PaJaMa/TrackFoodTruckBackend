@@ -21,8 +21,5 @@ public class User
 	private String password;
 
 	@NotNull
-	private String repPassword;
-
-	@NotNull
 	private String email;
 }
