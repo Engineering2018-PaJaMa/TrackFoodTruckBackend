@@ -40,7 +40,7 @@ public class FoodTruckServiceEndpoint implements FoodTruckService
 
 	@PostMapping
 	@Override
-	public List<Document> findFoodTruck(@RequestBody final Document foodTruck)
+	public Document findFoodTruck(@RequestBody final Document foodTruck)
 	{
 		log.info("Returning foodTruck {} from database.", foodTruck);
 		return foodTruckService.getFoodtruck(foodTruck);

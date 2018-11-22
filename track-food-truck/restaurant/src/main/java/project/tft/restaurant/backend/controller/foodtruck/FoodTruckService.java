@@ -1,7 +1,5 @@
 package project.tft.restaurant.backend.controller.foodtruck;
 
-import java.util.List;
-
 import org.bson.Document;
 
 import project.tft.restaurant.backend.dto.FoodTruck;
@@ -13,5 +11,5 @@ public interface FoodTruckService
 {
 	FoodTruck createFoodTruck(FoodTruck foodTruck);
 
-	List<Document> findFoodTruck(Document foodTruck);
+	Document findFoodTruck(Document foodTruck);
 }

@@ -27,16 +27,9 @@ public class FoodTruckImpl
 		mongoDBController.getDatabase().getCollection("Restaurants").insertOne(converter.convert(foodTruck));
 	}
 
-	public List<Document> getFoodtruck(final Document foodTruck)
+	public Document getFoodtruck(final Document foodTruck)
 	{
-		FindIterable<Document> documentList = mongoDBController.getDatabase().getCollection("Restaurants").find(foodTruck);
-		List<Document> list = new ArrayList<>();
-
-		for (Document d : documentList)
-		{
-			list.add(d);
-		}
-		return list;
+		return mongoDBController.getDatabase().getCollection("Restaurants").find(foodTruck).first();
 	}
 
 	public List<Document> getAllFoodTrucks()
