@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.slf4j.Slf4j;
 import project.tft.restaurant.backend.dto.FoodTruck;
+import project.tft.restaurant.backend.dto.FoodTruckProperties;
 
 /**
  * Created by Paweł Szopa on 31/10/2018
@@ -44,6 +46,14 @@ public class FoodTruckServiceEndpoint implements FoodTruckService
 	{
 		log.info("Returning foodTruck {} from database.", foodTruck);
 		return foodTruckService.getFoodtruck(foodTruck);
+	}
+
+	@PatchMapping
+	//	@Override
+	public void changeFoodTruckLocation(@RequestBody final FoodTruckProperties foodTruckProperties)
+	{
+		log.info("Changing foodTruck {} location", foodTruckProperties);
+		foodTruckService.changeFoodTruckLocation(foodTruckProperties);
 	}
 
 	@GetMapping("/all")

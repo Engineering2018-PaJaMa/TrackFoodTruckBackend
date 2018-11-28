@@ -15,4 +15,9 @@ public final class UserConverter
 	{
 		return new Document("login", user.getLogin()).append("password", user.getPassword()).append("email", user.getEmail());
 	}
+
+	public User convert(final Document user)
+	{
+		return new User(user.get("login").toString(), user.get("password").toString(), user.get("email").toString());
+	}
 }

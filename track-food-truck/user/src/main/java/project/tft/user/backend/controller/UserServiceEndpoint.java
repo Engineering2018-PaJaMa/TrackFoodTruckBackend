@@ -37,7 +37,7 @@ public class UserServiceEndpoint implements UserService
 
 	@PostMapping
 	@Override
-	public Document loginUser(@RequestBody final Document user)
+	public User loginUser(@RequestBody final Document user)
 	{
 		log.info("Returning user {} from database.", user);
 		return userService.findUserInDatabase(user);

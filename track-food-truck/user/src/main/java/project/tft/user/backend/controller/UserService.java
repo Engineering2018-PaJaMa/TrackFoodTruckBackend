@@ -11,5 +11,5 @@ public interface UserService
 {
 	User registerUser(User user);
 
-	Document loginUser(Document user);
+	User loginUser(Document user);
 }

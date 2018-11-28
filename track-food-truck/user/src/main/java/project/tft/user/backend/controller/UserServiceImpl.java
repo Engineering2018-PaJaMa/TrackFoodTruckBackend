@@ -25,8 +25,8 @@ public class UserServiceImpl
 		mongoDBController.getDatabase().getCollection("Users").insertOne(converter.convert(user));
 	}
 
-	public Document findUserInDatabase(final Document user)
+	public User findUserInDatabase(final Document user)
 	{
-		return mongoDBController.getDatabase().getCollection("Users").find(user).first();
+		return converter.convert(mongoDBController.getDatabase().getCollection("Users").find(user).first());
 	}
 }
