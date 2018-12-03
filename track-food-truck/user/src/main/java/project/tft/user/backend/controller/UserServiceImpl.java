@@ -27,10 +27,27 @@ public class UserServiceImpl
 		return mongoDBController.getDatabase().getCollection("Users").find(user).first();
 	}
 
-	public void addFavouriteFoodTruck(final UserProperties userProperties)
+	public Document addFavouriteFoodTruck(final UserProperties userProperties)
 	{
-		mongoDBController.getDatabase().getCollection("Users").findOneAndUpdate(
-				new org.bson.Document("login", userProperties.getName()),
-				new org.bson.Document("$set", new Document("favouriteFoodTrucks", userProperties.getFavouriteFoodTrucks())));
+		for (String foodTruck : userProperties.getFavouriteFoodTrucks())
+		{
+			mongoDBController.getDatabase()
+					.getCollection("Users")
+					.findOneAndUpdate(new org.bson.Document("login", userProperties.getName()),
+							new org.bson.Document("$push", new Document("favouriteFoodTrucks", foodTruck)));
+		}
+		return findUserInDatabase(new Document("login", userProperties.getName()));
+	}
+
+	public Document deleteFavouriteFoodTruck(final UserProperties userProperties)
+	{
+		for (String foodTruck : userProperties.getFavouriteFoodTrucks())
+		{
+			mongoDBController.getDatabase()
+					.getCollection("Users")
+					.findOneAndUpdate(new org.bson.Document("login", userProperties.getName()),
+							new org.bson.Document("$pull", new Document("favouriteFoodTrucks", foodTruck)));
+		}
+		return findUserInDatabase(new Document("login", userProperties.getName()));
 	}
 }
