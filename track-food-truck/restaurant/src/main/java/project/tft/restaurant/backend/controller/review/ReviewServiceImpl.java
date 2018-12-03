@@ -12,8 +12,6 @@ import org.springframework.stereotype.Component;
 import com.mongodb.client.FindIterable;
 
 import project.tft.db.MongoDBController;
-import project.tft.restaurant.backend.Converter;
-import project.tft.restaurant.backend.dto.Review;
 
 /**
  * Created by Paweł Szopa on 06/11/2018
@@ -24,15 +22,12 @@ public class ReviewServiceImpl
 	@Autowired
 	private MongoDBController mongoDBController;
 
-	@Autowired
-	private Converter converter;
-
-	public void createReview(final Review review)
+	public void createReview(final Document review)
 	{
-		mongoDBController.getDatabase().getCollection("Reviews").insertOne(converter.covert(review));
+		mongoDBController.getDatabase().getCollection("Reviews").insertOne(review);
 	}
 
-	public List<Document> getAllReviews(final String restaurantName)
+	public List<Document> getAllReviews(final Document restaurantName)
 	{
 		FindIterable<Document> documentList = mongoDBController.getDatabase().getCollection("Reviews").find(eq("restaurantName", restaurantName));
 		List<Document> list = new ArrayList<>();

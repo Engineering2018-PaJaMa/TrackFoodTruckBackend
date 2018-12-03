@@ -4,8 +4,6 @@ import static project.tft.restaurant.backend.Constants.FOOD_TRUCK_PATH;
 
 import java.util.List;
 
-import javax.validation.Valid;
-
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.slf4j.Slf4j;
-import project.tft.restaurant.backend.dto.FoodTruck;
 import project.tft.restaurant.backend.dto.FoodTruckProperties;
 
 /**
@@ -33,7 +30,7 @@ public class FoodTruckServiceEndpoint implements FoodTruckService
 
 	@PutMapping
 	@Override
-	public FoodTruck createFoodTruck(@RequestBody @Valid final FoodTruck foodTruck)
+	public Document createFoodTruck(@RequestBody final Document foodTruck)
 	{
 		log.info("Creating foodTruck {} in database.", foodTruck);
 		foodTruckService.createFoodtruck(foodTruck);
@@ -45,15 +42,16 @@ public class FoodTruckServiceEndpoint implements FoodTruckService
 	public Document findFoodTruck(@RequestBody final Document foodTruck)
 	{
 		log.info("Returning foodTruck {} from database.", foodTruck);
-		return foodTruckService.getFoodtruck(foodTruck);
+		foodTruckService.getFoodtruck(foodTruck);
+		return foodTruck;
 	}
 
 	@PatchMapping
-	//	@Override
-	public void changeFoodTruckLocation(@RequestBody final FoodTruckProperties foodTruckProperties)
+	@Override
+	public Document changeFoodTruckLocation(@RequestBody final FoodTruckProperties foodTruckProperties)
 	{
 		log.info("Changing foodTruck {} location", foodTruckProperties);
-		foodTruckService.changeFoodTruckLocation(foodTruckProperties);
+		return foodTruckService.changeFoodTruckLocation(foodTruckProperties);
 	}
 
 	@GetMapping("/all")

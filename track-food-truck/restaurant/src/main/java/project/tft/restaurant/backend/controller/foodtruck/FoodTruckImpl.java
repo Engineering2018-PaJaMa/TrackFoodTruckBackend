@@ -10,8 +10,6 @@ import org.springframework.stereotype.Component;
 import com.mongodb.client.FindIterable;
 
 import project.tft.db.MongoDBController;
-import project.tft.restaurant.backend.Converter;
-import project.tft.restaurant.backend.dto.FoodTruck;
 import project.tft.restaurant.backend.dto.FoodTruckProperties;
 
 @Component
@@ -20,22 +18,19 @@ public class FoodTruckImpl
 	@Autowired
 	private MongoDBController mongoDBController;
 
-	@Autowired
-	private Converter converter;
-
-	public void createFoodtruck(final FoodTruck foodTruck)
+	public void createFoodtruck(final Document foodTruck)
 	{
-		mongoDBController.getDatabase().getCollection("Restaurants").insertOne(converter.convert(foodTruck));
+		mongoDBController.getDatabase().getCollection("Restaurants").insertOne(foodTruck);
 	}
 
-	public Document getFoodtruck(final Document foodTruck)
+	public void getFoodtruck(final Document foodTruck)
 	{
-		return mongoDBController.getDatabase().getCollection("Restaurants").find(foodTruck).first();
+		mongoDBController.getDatabase().getCollection("Restaurants").find(foodTruck).first();
 	}
 
-	public void changeFoodTruckLocation(final FoodTruckProperties foodTruckProperties)
+	public Document changeFoodTruckLocation(final FoodTruckProperties foodTruckProperties)
 	{
-		mongoDBController.getDatabase()
+		return mongoDBController.getDatabase()
 				.getCollection("Restaurants")
 				.findOneAndUpdate(new Document("name", foodTruckProperties.getName()),
 						new Document("$set",
