@@ -1,7 +1,5 @@
 package project.tft.restaurant.backend.controller.review;
 
-import static com.mongodb.client.model.Filters.eq;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,14 +20,15 @@ public class ReviewServiceImpl
 	@Autowired
 	private MongoDBController mongoDBController;
 
-	public void createReview(final Document review)
+	public Document createReview(final Document review)
 	{
 		mongoDBController.getDatabase().getCollection("Reviews").insertOne(review);
+		return mongoDBController.getDatabase().getCollection("Reviews").find(review).first();
 	}
 
 	public List<Document> getAllReviews(final Document restaurantName)
 	{
-		FindIterable<Document> documentList = mongoDBController.getDatabase().getCollection("Reviews").find(eq("restaurantName", restaurantName));
+		FindIterable<Document> documentList = mongoDBController.getDatabase().getCollection("Reviews").find(restaurantName);
 		List<Document> list = new ArrayList<>();
 
 		for (Document d : documentList)

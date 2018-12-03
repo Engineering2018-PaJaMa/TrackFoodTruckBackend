@@ -18,14 +18,15 @@ public class FoodTruckImpl
 	@Autowired
 	private MongoDBController mongoDBController;
 
-	public void createFoodtruck(final Document foodTruck)
+	public Document createFoodtruck(final Document foodTruck)
 	{
 		mongoDBController.getDatabase().getCollection("Restaurants").insertOne(foodTruck);
+		return getFoodtruck(foodTruck);
 	}
 
-	public void getFoodtruck(final Document foodTruck)
+	public Document getFoodtruck(final Document foodTruck)
 	{
-		mongoDBController.getDatabase().getCollection("Restaurants").find(foodTruck).first();
+		return mongoDBController.getDatabase().getCollection("Restaurants").find(foodTruck).first();
 	}
 
 	public Document changeFoodTruckLocation(final FoodTruckProperties foodTruckProperties)

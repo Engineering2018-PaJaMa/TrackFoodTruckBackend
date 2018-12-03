@@ -33,8 +33,7 @@ public class FoodTruckServiceEndpoint implements FoodTruckService
 	public Document createFoodTruck(@RequestBody final Document foodTruck)
 	{
 		log.info("Creating foodTruck {} in database.", foodTruck);
-		foodTruckService.createFoodtruck(foodTruck);
-		return foodTruck;
+		return foodTruckService.createFoodtruck(foodTruck);
 	}
 
 	@PostMapping
@@ -42,8 +41,7 @@ public class FoodTruckServiceEndpoint implements FoodTruckService
 	public Document findFoodTruck(@RequestBody final Document foodTruck)
 	{
 		log.info("Returning foodTruck {} from database.", foodTruck);
-		foodTruckService.getFoodtruck(foodTruck);
-		return foodTruck;
+		return foodTruckService.getFoodtruck(foodTruck);
 	}
 
 	@PatchMapping

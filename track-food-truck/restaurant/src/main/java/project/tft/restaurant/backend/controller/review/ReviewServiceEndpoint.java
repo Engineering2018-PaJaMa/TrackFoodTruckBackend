@@ -30,8 +30,7 @@ public class ReviewServiceEndpoint implements ReviewService
 	public Document createReview(@RequestBody Document review)
 	{
 		log.info("Creating foodTruck review {} in database.", review);
-		reviewService.createReview(review);
-		return review;
+		return reviewService.createReview(review);
 	}
 
 	@PostMapping
