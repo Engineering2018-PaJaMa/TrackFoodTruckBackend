@@ -7,17 +7,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * Created by Paweł Szopa on 31/10/2018
+ * Created by Paweł Szopa on 25/11/2018
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Location
+public class FoodTruckProperties
 {
-	private String country;
-	private String city;
 	@NotNull
-	private double latitude;
+	private String name;
 	@NotNull
-	private double longitude;
+	private Location location;
 }

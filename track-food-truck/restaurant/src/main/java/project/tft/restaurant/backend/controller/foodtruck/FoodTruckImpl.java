@@ -10,8 +10,7 @@ import org.springframework.stereotype.Component;
 import com.mongodb.client.FindIterable;
 
 import project.tft.db.MongoDBController;
-import project.tft.restaurant.backend.Converter;
-import project.tft.restaurant.backend.dto.FoodTruck;
+import project.tft.restaurant.backend.dto.FoodTruckProperties;
 
 @Component
 public class FoodTruckImpl
@@ -19,24 +18,27 @@ public class FoodTruckImpl
 	@Autowired
 	private MongoDBController mongoDBController;
 
-	@Autowired
-	private Converter converter;
-
-	public void createFoodtruck(final FoodTruck foodTruck)
+	public Document createFoodtruck(final Document foodTruck)
 	{
-		mongoDBController.getDatabase().getCollection("Restaurants").insertOne(converter.convert(foodTruck));
+		mongoDBController.getDatabase().getCollection("Restaurants").insertOne(foodTruck);
+		return getFoodtruck(foodTruck);
 	}
 
-	public List<Document> getFoodtruck(final Document foodTruck)
+	public Document getFoodtruck(final Document foodTruck)
 	{
-		FindIterable<Document> documentList = mongoDBController.getDatabase().getCollection("Restaurants").find(foodTruck);
-		List<Document> list = new ArrayList<>();
+		return mongoDBController.getDatabase().getCollection("Restaurants").find(foodTruck).first();
+	}
 
-		for (Document d : documentList)
-		{
-			list.add(d);
-		}
-		return list;
+	public Document changeFoodTruckLocation(final FoodTruckProperties foodTruckProperties)
+	{
+		return mongoDBController.getDatabase()
+				.getCollection("Restaurants")
+				.findOneAndUpdate(new Document("name", foodTruckProperties.getName()),
+						new Document("$set",
+								new Document("location.country", foodTruckProperties.getLocation().getCountry()).append("location.city",
+										foodTruckProperties.getLocation().getCity())
+										.append("location.latitude", foodTruckProperties.getLocation().getLatitude())
+										.append("location.longitude", foodTruckProperties.getLocation().getLongitude())));
 	}
 
 	public List<Document> getAllFoodTrucks()

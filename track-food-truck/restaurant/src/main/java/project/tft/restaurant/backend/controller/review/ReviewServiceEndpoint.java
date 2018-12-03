@@ -4,8 +4,6 @@ import static project.tft.restaurant.backend.Constants.FOOD_TRUCK_REVIEW_PATH;
 
 import java.util.List;
 
-import javax.validation.Valid;
-
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.slf4j.Slf4j;
-import project.tft.restaurant.backend.dto.Review;
 
 /**
  * Created by Paweł Szopa on 23/10/2018
@@ -30,18 +27,17 @@ public class ReviewServiceEndpoint implements ReviewService
 
 	@PutMapping
 	@Override
-	public Review createReview(@RequestBody @Valid Review review)
+	public Document createReview(@RequestBody Document review)
 	{
 		log.info("Creating foodTruck review {} in database.", review);
-		reviewService.createReview(review);
-		return review;
+		return reviewService.createReview(review);
 	}
 
 	@PostMapping
 	@Override
-	public List<Document> findReviews(@RequestBody final Review review)
+	public List<Document> findReviews(@RequestBody final Document review)
 	{
-		log.info("Returning foodTruck {} reviews from database.", review.getRestaurantName());
-		return reviewService.getAllReviews(review.getRestaurantName());
+		log.info("Returning foodTruck {} reviews from database.", review);
+		return reviewService.getAllReviews(review);
 	}
 }
