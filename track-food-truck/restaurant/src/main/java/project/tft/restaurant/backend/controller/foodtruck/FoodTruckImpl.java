@@ -2,6 +2,7 @@ package project.tft.restaurant.backend.controller.foodtruck;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,8 @@ public class FoodTruckImpl
 
 	public Document getFoodtruck(final Document foodTruck)
 	{
-		return mongoDBController.getDatabase().getCollection("Restaurants").find(foodTruck).first();
+		Optional<Document> document = Optional.ofNullable(mongoDBController.getDatabase().getCollection("Restaurants").find(foodTruck).first());
+		return document.get();
 	}
 
 	public Document changeFoodTruckLocation(final FoodTruckProperties foodTruckProperties)
