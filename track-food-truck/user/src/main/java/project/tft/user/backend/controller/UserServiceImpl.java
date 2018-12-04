@@ -1,5 +1,7 @@
 package project.tft.user.backend.controller;
 
+import java.util.Optional;
+
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -24,7 +26,8 @@ public class UserServiceImpl
 
 	public Document findUserInDatabase(final Document user)
 	{
-		return mongoDBController.getDatabase().getCollection("Users").find(user).first();
+		Optional<Document> document = Optional.ofNullable(mongoDBController.getDatabase().getCollection("Users").find(user).first());
+		return document.get();
 	}
 
 	public Document addFavouriteFoodTruck(final UserProperties userProperties)
