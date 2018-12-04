@@ -2,10 +2,9 @@ package project.tft.user.backend.controller;
 
 import static project.tft.user.backend.Constants.USER_PATH;
 
-import java.util.List;
-
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -45,10 +44,17 @@ public class UserServiceEndpoint implements UserService
 
 	@PatchMapping(path = "/favourites")
 	@Override
-	public List<String> addFavouriteFoodTruck(@RequestBody final UserProperties userProperties)
+	public Document addFavouriteFoodTruck(@RequestBody final UserProperties userProperties)
 	{
 		log.info("Adding favourite foodTruck {} for user {}", userProperties.getFavouriteFoodTrucks(), userProperties.getName());
-		userService.addFavouriteFoodTruck(userProperties);
-		return userProperties.getFavouriteFoodTrucks();
+		return userService.addFavouriteFoodTruck(userProperties);
+	}
+
+	@DeleteMapping(path = "/favourites")
+	@Override
+	public Document deleteFavouriteFoodTruck(@RequestBody final UserProperties userProperties)
+	{
+		log.info("Adding favourite foodTruck {} for user {}", userProperties.getFavouriteFoodTrucks(), userProperties.getName());
+		return userService.deleteFavouriteFoodTruck(userProperties);
 	}
 }

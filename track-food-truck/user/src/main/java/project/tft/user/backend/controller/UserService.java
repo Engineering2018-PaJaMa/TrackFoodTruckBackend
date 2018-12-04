@@ -1,7 +1,5 @@
 package project.tft.user.backend.controller;
 
-import java.util.List;
-
 import org.bson.Document;
 
 import project.tft.user.backend.dto.UserProperties;
@@ -15,5 +13,7 @@ public interface UserService
 
 	Document loginUser(Document user);
 
-	List<String> addFavouriteFoodTruck(UserProperties userProperties);
+	Document addFavouriteFoodTruck(UserProperties userProperties);
+
+	Document deleteFavouriteFoodTruck(UserProperties userProperties);
 }
