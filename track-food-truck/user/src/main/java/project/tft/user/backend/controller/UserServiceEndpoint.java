@@ -38,7 +38,7 @@ public class UserServiceEndpoint implements UserService
 	@Override
 	public Document loginUser(@RequestBody final Document user)
 	{
-		log.info("Returning user {} from database.", user);
+		log.info("Logging in user {} from database.", user);
 		return userService.findUserInDatabase(user);
 	}
 
@@ -46,7 +46,7 @@ public class UserServiceEndpoint implements UserService
 	@Override
 	public Document addFavouriteFoodTruck(@RequestBody final UserProperties userProperties)
 	{
-		log.info("Adding favourite foodTruck {} for user {}", userProperties.getFavouriteFoodTrucks(), userProperties.getName());
+		log.info("Adding favourite foodTruck {} for user {}.", userProperties.getFavouriteFoodTrucks(), userProperties.getName());
 		return userService.addFavouriteFoodTruck(userProperties);
 	}
 
@@ -54,7 +54,7 @@ public class UserServiceEndpoint implements UserService
 	@Override
 	public Document deleteFavouriteFoodTruck(@RequestBody final UserProperties userProperties)
 	{
-		log.info("Adding favourite foodTruck {} for user {}", userProperties.getFavouriteFoodTrucks(), userProperties.getName());
+		log.info("Adding favourite foodTruck {} for user {}.", userProperties.getFavouriteFoodTrucks(), userProperties.getName());
 		return userService.deleteFavouriteFoodTruck(userProperties);
 	}
 }

@@ -14,7 +14,7 @@ import project.tft.db.MongoDBController;
 import project.tft.restaurant.backend.dto.FoodTruckProperties;
 
 @Component
-public class FoodTruckImpl
+public class FoodTruckServiceImpl
 {
 	@Autowired
 	private MongoDBController mongoDBController;

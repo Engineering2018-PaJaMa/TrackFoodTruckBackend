@@ -26,7 +26,7 @@ import project.tft.restaurant.backend.dto.FoodTruckProperties;
 public class FoodTruckServiceEndpoint implements FoodTruckService
 {
 	@Autowired
-	private FoodTruckImpl foodTruckService;
+	private FoodTruckServiceImpl foodTruckService;
 
 	@PutMapping
 	@Override
@@ -40,7 +40,7 @@ public class FoodTruckServiceEndpoint implements FoodTruckService
 	@Override
 	public Document findFoodTruck(@RequestBody final Document foodTruck)
 	{
-		log.info("Returning foodTruck {} from database.", foodTruck);
+		log.info("Logging in foodTruck {}.", foodTruck);
 		return foodTruckService.getFoodtruck(foodTruck);
 	}
 
@@ -48,7 +48,7 @@ public class FoodTruckServiceEndpoint implements FoodTruckService
 	@Override
 	public Document changeFoodTruckLocation(@RequestBody final FoodTruckProperties foodTruckProperties)
 	{
-		log.info("Changing foodTruck {} location", foodTruckProperties);
+		log.info("Changing foodTruck {} location.", foodTruckProperties);
 		return foodTruckService.changeFoodTruckLocation(foodTruckProperties);
 	}
 
