@@ -1,19 +1,15 @@
 package project.tft.user.backend.controller;
 
-import org.bson.Document;
+import org.springframework.http.ResponseEntity;
 
-import project.tft.user.backend.dto.UserProperties;
+import project.tft.db.user.User;
 
 /**
  * Created by Paweł Szopa on 31/10/2018
  */
 public interface UserService
 {
-	Document registerUser(Document user);
+	ResponseEntity registerUser(User user);
 
-	Document loginUser(Document user);
-
-	Document addFavouriteFoodTruck(UserProperties userProperties);
-
-	Document deleteFavouriteFoodTruck(UserProperties userProperties);
+	ResponseEntity loginUser(User user);
 }

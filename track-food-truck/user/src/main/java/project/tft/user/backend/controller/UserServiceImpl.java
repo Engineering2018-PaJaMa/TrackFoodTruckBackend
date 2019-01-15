@@ -6,8 +6,8 @@ import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import project.tft.db.MongoDBController;
-import project.tft.user.backend.dto.UserProperties;
+import project.tft.db.user.User;
+import project.tft.db.user.UserRepository;
 
 /**
  * Created by Paweł Szopa on 06/11/2018
@@ -16,41 +16,16 @@ import project.tft.user.backend.dto.UserProperties;
 public class UserServiceImpl
 {
 	@Autowired
-	private MongoDBController mongoDBController;
+	private UserRepository userRepository;
 
-	public Document registerUserInDatabase(final Document user)
+	public Optional<Document> registerUserInDatabase(final User user)
 	{
-		mongoDBController.getDatabase().getCollection("Users").insertOne(user);
+		userRepository.save(user);
 		return findUserInDatabase(user);
 	}
 
-	public Document findUserInDatabase(final Document user)
+	public Optional<Document> findUserInDatabase(final User user)
 	{
-		Optional<Document> document = Optional.ofNullable(mongoDBController.getDatabase().getCollection("Users").find(user).first());
-		return document.get();
-	}
-
-	public Document addFavouriteFoodTruck(final UserProperties userProperties)
-	{
-		for (String foodTruck : userProperties.getFavouriteFoodTrucks())
-		{
-			mongoDBController.getDatabase()
-					.getCollection("Users")
-					.findOneAndUpdate(new org.bson.Document("login", userProperties.getName()),
-							new org.bson.Document("$push", new Document("favouriteFoodTrucks", foodTruck)));
-		}
-		return findUserInDatabase(new Document("login", userProperties.getName()));
-	}
-
-	public Document deleteFavouriteFoodTruck(final UserProperties userProperties)
-	{
-		for (String foodTruck : userProperties.getFavouriteFoodTrucks())
-		{
-			mongoDBController.getDatabase()
-					.getCollection("Users")
-					.findOneAndUpdate(new org.bson.Document("login", userProperties.getName()),
-							new org.bson.Document("$pull", new Document("favouriteFoodTrucks", foodTruck)));
-		}
-		return findUserInDatabase(new Document("login", userProperties.getName()));
+		return userRepository.findByLoginAndPassword(user.getLogin(), user.getPassword());
 	}
 }

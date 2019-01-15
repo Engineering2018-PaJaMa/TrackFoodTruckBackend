@@ -1,4 +1,4 @@
-package project.tft.user.backend.dto;
+package project.tft.db.user;
 
 import javax.validation.constraints.NotNull;
 
@@ -20,6 +20,5 @@ public class User
 	@NotNull
 	private String password;
 
-	@NotNull
 	private String email;
 }
