@@ -18,10 +18,14 @@ public class UserServiceImpl
 	@Autowired
 	private UserRepository userRepository;
 
-	public Optional<Document> registerUserInDatabase(final User user)
+	public boolean registerUserInDatabase(final User user)
 	{
-		userRepository.save(user);
-		return findUserInDatabase(user);
+		if (!findUserInDatabase(user).isPresent())
+		{
+			userRepository.save(user);
+			return true;
+		}
+		return false;
 	}
 
 	public Optional<Document> findUserInDatabase(final User user)
