@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,14 +35,43 @@ public class UserServiceEndpoint implements UserService
 		return ResponseEntity.badRequest().build();
 	}
 
-	@PostMapping
+	@PostMapping("/new/hash")
 	@Override
-	public ResponseEntity loginUser(@RequestBody @Valid final User user)
+	public ResponseEntity registerUserWithHash(@RequestBody @Valid final User user)
 	{
-		if (userService.findUserInDatabase(user).isPresent())
+		if (userService.registerUserInDatabaseWithHash(user))
 		{
 			return ResponseEntity.ok().build();
 		}
 		return ResponseEntity.badRequest().build();
+	}
+
+	@PostMapping
+	@Override
+	public ResponseEntity loginUser(@RequestBody @Valid final User user)
+	{
+		if (userService.findUserInDatabaseByLoginAndPassword(user).isPresent())
+		{
+			return ResponseEntity.ok().build();
+		}
+		return ResponseEntity.badRequest().build();
+	}
+
+	@PostMapping("/hash")
+	@Override
+	public ResponseEntity loginUserWithHash(@RequestBody @Valid final User user)
+	{
+		if (userService.findUserInDatabaseByLoginAndPassword(user).isPresent())
+		{
+			return ResponseEntity.ok().build();
+		}
+		return ResponseEntity.badRequest().build();
+	}
+
+	@DeleteMapping("all")
+	@Override
+	public void deleteAllUsers()
+	{
+		userService.deleteAll();
 	}
 }

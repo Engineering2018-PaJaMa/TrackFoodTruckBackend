@@ -17,11 +17,19 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class User
 {
+	public User(final String login, final String password)
+	{
+		this.login = login;
+		this.password = password;
+	}
+
 	@NotNull
 	private String login;
 
 	@NotNull
 	private String password;
+
+	private String salt;
 
 	private String email;
 }

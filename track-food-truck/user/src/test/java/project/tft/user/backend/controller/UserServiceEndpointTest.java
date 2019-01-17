@@ -7,6 +7,7 @@ import org.junit.Test;
  */
 public class UserServiceEndpointTest
 {
+
 	@Test
 	public void howToProjectThisShit()
 	{

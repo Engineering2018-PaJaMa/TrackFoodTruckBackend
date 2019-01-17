@@ -11,6 +11,7 @@
 		<module>user</module>
 		<module>app</module>
 		<module>database</module>
+		<module>hasher</module>
 	</modules>
 	<packaging>pom</packaging>
 

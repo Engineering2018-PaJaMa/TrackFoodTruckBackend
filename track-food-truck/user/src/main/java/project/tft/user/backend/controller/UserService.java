@@ -11,5 +11,11 @@ public interface UserService
 {
 	ResponseEntity registerUser(User user);
 
+	ResponseEntity registerUserWithHash(User user);
+
 	ResponseEntity loginUser(User user);
+
+	ResponseEntity loginUserWithHash(User user);
+
+	void deleteAllUsers();
 }
