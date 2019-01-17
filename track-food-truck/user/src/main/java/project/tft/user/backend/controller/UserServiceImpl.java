@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import lombok.extern.slf4j.Slf4j;
 import project.tft.db.user.User;
 import project.tft.db.user.UserRepository;
+import project.tft.hasher.HasherService;
 
 /**
  * Created by Paweł Szopa on 06/11/2018
@@ -21,7 +22,7 @@ public class UserServiceImpl
 	private UserRepository userRepository;
 
 	@Autowired
-	private Hasher hasher;
+	private HasherService hasher;
 
 	public boolean registerUserInDatabase(final User user)
 	{
@@ -30,6 +31,12 @@ public class UserServiceImpl
 			userRepository.save(user);
 			return true;
 		}
+		return false;
+	}
+
+	public boolean registerUserInDatabaseWithHash(final User user)
+	{
+		//TODO
 		return false;
 	}
 
@@ -46,10 +53,5 @@ public class UserServiceImpl
 	public void deleteAll()
 	{
 		userRepository.deleteAll();
-	}
-
-	public boolean registerUserInDatabaseWithHash(final User user)
-	{
-		return false;
 	}
 }

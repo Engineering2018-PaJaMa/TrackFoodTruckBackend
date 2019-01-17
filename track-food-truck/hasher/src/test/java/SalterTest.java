@@ -2,6 +2,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
+import project.tft.salter.Salter;
+import project.tft.salter.SalterService;
+
 /**
  * Created by Paweł Szopa on 17/01/2019
  */
@@ -11,7 +14,7 @@ public class SalterTest
 	public void salterTest()
 	{
 		//given
-		Salter salter = new Salter();
+		SalterService salter = new Salter();
 
 		//when
 		String salt = salter.generateSalt();

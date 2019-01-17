@@ -1,3 +1,5 @@
+package project.tft.hasher;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

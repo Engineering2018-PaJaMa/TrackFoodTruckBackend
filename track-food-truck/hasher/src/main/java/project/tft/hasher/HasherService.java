@@ -1,3 +1,5 @@
+package project.tft.hasher;
+
 /**
  * Created by Paweł Szopa on 17/01/2019
  */

@@ -1,20 +1,31 @@
+package project.tft.hasher;
+
+import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Base64;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import lombok.extern.slf4j.Slf4j;
+import project.tft.salter.Salter;
+import project.tft.salter.SalterService;
 
 /**
  * Created by Paweł Szopa on 17/01/2019
  */
 @Component
+@Slf4j
 public class Hasher implements HasherService
 {
-	@Autowired
-	private Salter salter;
+	private SalterService salter;
+
+	public Hasher()
+	{
+		salter = new Salter();
+	}
 
 	@Override
 	public Hash encrypt(final String toEncrypt)
@@ -51,12 +62,13 @@ public class Hasher implements HasherService
 		}
 		catch (NoSuchAlgorithmException e)
 		{
-			return false;
+			log.error("Exception {}", e);
 		}
 		finally
 		{
 			clearData(rawPassword);
 		}
+		return false;
 	}
 
 	public void clearData(final String data)
@@ -65,6 +77,17 @@ public class Hasher implements HasherService
 		{
 			return;
 		}
-		Arrays.fill(data.toCharArray(), '0');
+
+		try
+		{
+			Field field = String.class.getDeclaredField("value");
+			field.setAccessible(true);
+			byte[] value = (byte[]) field.get(data);
+			Arrays.fill(value, (byte) '0');
+		}
+		catch (Exception e)
+		{
+			log.error("Exception {}", e);
+		}
 	}
 }
