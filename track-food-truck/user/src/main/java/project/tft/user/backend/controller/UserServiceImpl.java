@@ -7,8 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import lombok.extern.slf4j.Slf4j;
+import project.tft.db.user.HashedUserRepository;
 import project.tft.db.user.User;
 import project.tft.db.user.UserRepository;
+import project.tft.db.user.UserWithSalt;
+import project.tft.hasher.Hash;
 import project.tft.hasher.HasherService;
 
 /**
@@ -20,6 +23,9 @@ public class UserServiceImpl
 {
 	@Autowired
 	private UserRepository userRepository;
+
+	@Autowired
+	private HashedUserRepository hashedUserRepository;
 
 	@Autowired
 	private HasherService hasher;
@@ -34,9 +40,16 @@ public class UserServiceImpl
 		return false;
 	}
 
-	public boolean registerUserInDatabaseWithHash(final User user)
+	public boolean registerUserInDatabaseWithHash(final UserWithSalt user)
 	{
-		//TODO
+		if (!findHashedUserInDatabaseByLogin(user).isPresent())
+		{
+			Hash hash = hasher.encrypt(user.getPassword());
+			user.setPassword(hash.getHash());
+			user.setSalt(hash.getSalt());
+			hashedUserRepository.save(user);
+			return true;
+		}
 		return false;
 	}
 
@@ -45,9 +58,28 @@ public class UserServiceImpl
 		return userRepository.findByLogin(user.getLogin());
 	}
 
+	public Optional<Document> findHashedUserInDatabaseByLogin(final User user)
+	{
+		return hashedUserRepository.findByLogin(user.getLogin());
+	}
+
 	public Optional<Document> findUserInDatabaseByLoginAndPassword(final User user)
 	{
 		return userRepository.findByLoginAndPassword(user.getLogin(), user.getPassword());
+	}
+
+	public Optional<Document> findUserInDatabaseByLoginAndHashedPassword(final User user)
+	{
+		Optional<Document> userWithSalt = hashedUserRepository.findByLogin(user.getLogin());
+		if (userWithSalt.isPresent())
+		{
+			Hash hash = new Hash(userWithSalt.get().get("password").toString(), userWithSalt.get().get("salt").toString());
+			if (hasher.matches(user.getPassword(), hash))
+			{
+				return hashedUserRepository.findByLoginAndPassword(user.getLogin(), hash.getHash());
+			}
+		}
+		return Optional.empty();
 	}
 
 	public void deleteAll()
