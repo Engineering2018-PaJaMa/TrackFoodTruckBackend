@@ -19,4 +19,6 @@ public interface UserService
 	ResponseEntity loginUserWithHash(User user);
 
 	void deleteAllUsers();
+
+	void deleteAllHashedUsers();
 }

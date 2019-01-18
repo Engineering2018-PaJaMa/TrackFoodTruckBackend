@@ -29,7 +29,7 @@ public class TrackFoodTruckApplicationTest
 	}
 
 	@Test
-	public void registerThenLoginThousandUsersUsingMethodWithoutEncryption()
+	public void registerThenLoginThousandUsers()
 	{
 		for (int i = 0; i < 1000; i++)
 		{
@@ -39,12 +39,32 @@ public class TrackFoodTruckApplicationTest
 	}
 
 	@Test
-	public void registerThenLoginTenThousandUsersUsingMethodWithoutEncryption()
+	public void registerThenLoginTenThousand()
 	{
 		for (int i = 0; i < 10000; i++)
 		{
 			restTemplate.postForEntity("http://localhost:" + port + "/tft/user/new", new User("userLogin" + i, "userPassword" + i), HttpEntity.class);
 			restTemplate.postForEntity("http://localhost:" + port + "/tft/user", new User("userLogin" + i, "userPassword" + i), HttpEntity.class);
+		}
+	}
+
+	@Test
+	public void registerThenLoginThousandUsersWithHashes()
+	{
+		for (int i = 0; i < 1000; i++)
+		{
+			restTemplate.postForEntity("http://localhost:" + port + "/tft/user/new/hash", new User("userLogin" + i, "userPassword" + i), HttpEntity.class);
+			restTemplate.postForEntity("http://localhost:" + port + "/tft/user/hash", new User("userLogin" + i, "userPassword" + i), HttpEntity.class);
+		}
+	}
+
+	@Test
+	public void registerThenLoginTenThousandWithHashes()
+	{
+		for (int i = 0; i < 10000; i++)
+		{
+			restTemplate.postForEntity("http://localhost:" + port + "/tft/user/new/hash", new User("userLogin" + i, "userPassword" + i), HttpEntity.class);
+			restTemplate.postForEntity("http://localhost:" + port + "/tft/user/hash", new User("userLogin" + i, "userPassword" + i), HttpEntity.class);
 		}
 	}
 }

@@ -86,4 +86,9 @@ public class UserServiceImpl
 	{
 		userRepository.deleteAll();
 	}
+
+	public void deleteAllHashed()
+	{
+		hashedUserRepository.deleteAll();
+	}
 }

@@ -75,4 +75,11 @@ public class UserServiceEndpoint implements UserService
 	{
 		userService.deleteAll();
 	}
+
+	@DeleteMapping("all/hash")
+	@Override
+	public void deleteAllHashedUsers()
+	{
+		userService.deleteAllHashed();
+	}
 }
