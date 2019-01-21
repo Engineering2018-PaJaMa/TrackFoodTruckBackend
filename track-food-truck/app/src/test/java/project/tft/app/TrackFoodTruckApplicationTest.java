@@ -26,6 +26,14 @@ public class TrackFoodTruckApplicationTest
 	public void deleteAllUsers()
 	{
 		restTemplate.delete("http://localhost:" + port + "/tft/user/all");
+		restTemplate.delete("http://localhost:" + port + "/tft/user/all/hash");
+	}
+
+	@Test
+	public void registerThenLoginOneUser()
+	{
+		restTemplate.postForEntity("http://localhost:" + port + "/tft/user/new", new User("userLogin", "userPassword"), HttpEntity.class);
+		restTemplate.postForEntity("http://localhost:" + port + "/tft/user", new User("userLogin", "userPassword"), HttpEntity.class);
 	}
 
 	@Test
@@ -33,8 +41,8 @@ public class TrackFoodTruckApplicationTest
 	{
 		for (int i = 0; i < 1000; i++)
 		{
-			restTemplate.postForEntity("http://localhost:" + port + "/tft/user/new", new User("userLogin" + i, "userPassword" + i), HttpEntity.class);
-			restTemplate.postForEntity("http://localhost:" + port + "/tft/user", new User("userLogin" + i, "userPassword" + i), HttpEntity.class);
+			restTemplate.postForEntity("http://localhost:" + port + "/tft/user/new", new User("userLogin" + i, "userPassword"), HttpEntity.class);
+			restTemplate.postForEntity("http://localhost:" + port + "/tft/user", new User("userLogin" + i, "userPassword"), HttpEntity.class);
 		}
 	}
 
@@ -43,9 +51,16 @@ public class TrackFoodTruckApplicationTest
 	{
 		for (int i = 0; i < 10000; i++)
 		{
-			restTemplate.postForEntity("http://localhost:" + port + "/tft/user/new", new User("userLogin" + i, "userPassword" + i), HttpEntity.class);
-			restTemplate.postForEntity("http://localhost:" + port + "/tft/user", new User("userLogin" + i, "userPassword" + i), HttpEntity.class);
+			restTemplate.postForEntity("http://localhost:" + port + "/tft/user/new", new User("userLogin" + i, "userPassword"), HttpEntity.class);
+			restTemplate.postForEntity("http://localhost:" + port + "/tft/user", new User("userLogin" + i, "userPassword"), HttpEntity.class);
 		}
+	}
+
+	@Test
+	public void registerThenLoginOneUserWithHash()
+	{
+		restTemplate.postForEntity("http://localhost:" + port + "/tft/user/new/hash", new User("userLogin", "userPassword"), HttpEntity.class);
+		restTemplate.postForEntity("http://localhost:" + port + "/tft/user/hash", new User("userLogin", "userPassword"), HttpEntity.class);
 	}
 
 	@Test
@@ -53,8 +68,8 @@ public class TrackFoodTruckApplicationTest
 	{
 		for (int i = 0; i < 1000; i++)
 		{
-			restTemplate.postForEntity("http://localhost:" + port + "/tft/user/new/hash", new User("userLogin" + i, "userPassword" + i), HttpEntity.class);
-			restTemplate.postForEntity("http://localhost:" + port + "/tft/user/hash", new User("userLogin" + i, "userPassword" + i), HttpEntity.class);
+			restTemplate.postForEntity("http://localhost:" + port + "/tft/user/new/hash", new User("userLogin" + i, "userPassword"), HttpEntity.class);
+			restTemplate.postForEntity("http://localhost:" + port + "/tft/user/hash", new User("userLogin" + i, "userPassword"), HttpEntity.class);
 		}
 	}
 
@@ -63,8 +78,8 @@ public class TrackFoodTruckApplicationTest
 	{
 		for (int i = 0; i < 10000; i++)
 		{
-			restTemplate.postForEntity("http://localhost:" + port + "/tft/user/new/hash", new User("userLogin" + i, "userPassword" + i), HttpEntity.class);
-			restTemplate.postForEntity("http://localhost:" + port + "/tft/user/hash", new User("userLogin" + i, "userPassword" + i), HttpEntity.class);
+			restTemplate.postForEntity("http://localhost:" + port + "/tft/user/new/hash", new User("userLogin" + i, "userPassword"), HttpEntity.class);
+			restTemplate.postForEntity("http://localhost:" + port + "/tft/user/hash", new User("userLogin" + i, "userPassword"), HttpEntity.class);
 		}
 	}
 }

@@ -12,6 +12,7 @@
 		<module>app</module>
 		<module>database</module>
 		<module>hasher</module>
+		<module>json-web-token</module>
 	</modules>
 	<packaging>pom</packaging>
 

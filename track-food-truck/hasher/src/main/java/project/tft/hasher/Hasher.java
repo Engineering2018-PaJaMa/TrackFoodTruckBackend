@@ -34,7 +34,7 @@ public class Hasher implements HasherService
 		{
 			Hash hash = new Hash();
 			MessageDigest messageDigest = MessageDigest.getInstance("SHA-512");
-			hash.setSalt(salter.generateSalt());
+			hash.setSalt(salter.generateSalt32());
 			messageDigest.update(hash.getSalt().getBytes());
 			byte[] encrypted = messageDigest.digest(toEncrypt.getBytes(StandardCharsets.UTF_8));
 			hash.setHash(Base64.getUrlEncoder().withoutPadding().encodeToString(encrypted));
@@ -71,7 +71,7 @@ public class Hasher implements HasherService
 		return false;
 	}
 
-	public void clearData(final String data)
+	private void clearData(final String data)
 	{
 		if (data == null)
 		{

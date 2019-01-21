@@ -17,7 +17,7 @@ public class SalterTest
 		SalterService salter = new Salter();
 
 		//when
-		String salt = salter.generateSalt();
+		String salt = salter.generateSalt32();
 		String password = "password";
 
 		//then

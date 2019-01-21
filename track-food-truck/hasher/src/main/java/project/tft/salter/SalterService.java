@@ -5,5 +5,13 @@ package project.tft.salter;
  */
 public interface SalterService
 {
-	String generateSalt();
+	String generateSalt32();
+
+	String generateSalt64();
+
+	String generateSalt128();
+
+	String generateSalt256();
+
+	String generateSalt512();
 }
