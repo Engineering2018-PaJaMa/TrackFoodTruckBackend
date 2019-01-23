@@ -47,16 +47,6 @@ public class TrackFoodTruckApplicationTest
 	}
 
 	@Test
-	public void registerThenLoginTenThousand()
-	{
-		for (int i = 0; i < 10000; i++)
-		{
-			restTemplate.postForEntity("http://localhost:" + port + "/tft/user/new", new User("userLogin" + i, "userPassword"), HttpEntity.class);
-			restTemplate.postForEntity("http://localhost:" + port + "/tft/user", new User("userLogin" + i, "userPassword"), HttpEntity.class);
-		}
-	}
-
-	@Test
 	public void registerThenLoginOneUserWithHash()
 	{
 		restTemplate.postForEntity("http://localhost:" + port + "/tft/user/new/hash", new User("userLogin", "userPassword"), HttpEntity.class);
@@ -73,13 +63,4 @@ public class TrackFoodTruckApplicationTest
 		}
 	}
 
-	@Test
-	public void registerThenLoginTenThousandWithHashes()
-	{
-		for (int i = 0; i < 10000; i++)
-		{
-			restTemplate.postForEntity("http://localhost:" + port + "/tft/user/new/hash", new User("userLogin" + i, "userPassword"), HttpEntity.class);
-			restTemplate.postForEntity("http://localhost:" + port + "/tft/user/hash", new User("userLogin" + i, "userPassword"), HttpEntity.class);
-		}
-	}
 }

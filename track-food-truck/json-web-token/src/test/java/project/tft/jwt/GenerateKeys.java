@@ -105,16 +105,16 @@ public class GenerateKeys
 	{
 		Path path = Paths.get("/Users/Pawel/IdeaProjects/TrackFoodTruckBackend/track-food-truck/json-web-token/.tft2048.pub");
 		byte[] bytes = Files.readAllBytes(path);
-		X509EncodedKeySpec ks = new X509EncodedKeySpec(bytes);
-		return KeyFactory.getInstance("RSA").generatePublic(ks);
+		X509EncodedKeySpec encodedKeySpec = new X509EncodedKeySpec(bytes);
+		return KeyFactory.getInstance("RSA").generatePublic(encodedKeySpec);
 	}
 
 	public PublicKey loadRsaPublicKey4096() throws IOException, NoSuchAlgorithmException, InvalidKeySpecException
 	{
 		Path path = Paths.get("/Users/Pawel/IdeaProjects/TrackFoodTruckBackend/track-food-truck/json-web-token/.tft4096.pub");
 		byte[] bytes = Files.readAllBytes(path);
-		X509EncodedKeySpec ks = new X509EncodedKeySpec(bytes);
-		return KeyFactory.getInstance("RSA").generatePublic(ks);
+		X509EncodedKeySpec encodedKeySpec = new X509EncodedKeySpec(bytes);
+		return KeyFactory.getInstance("RSA").generatePublic(encodedKeySpec);
 	}
 
 	public PrivateKey loadRsaPrivateKey2048() throws IOException, NoSuchAlgorithmException, InvalidKeySpecException
@@ -122,8 +122,8 @@ public class GenerateKeys
 		Path path = Paths.get("/Users/Pawel/IdeaProjects/TrackFoodTruckBackend/track-food-truck/json-web-token/.tft2048");
 		byte[] bytes = Files.readAllBytes(path);
 
-		PKCS8EncodedKeySpec ks = new PKCS8EncodedKeySpec(bytes);
-		return KeyFactory.getInstance("RSA").generatePrivate(ks);
+		PKCS8EncodedKeySpec encodedKeySpec = new PKCS8EncodedKeySpec(bytes);
+		return KeyFactory.getInstance("RSA").generatePrivate(encodedKeySpec);
 	}
 
 	public PrivateKey loadRsaPrivateKey4096() throws IOException, NoSuchAlgorithmException, InvalidKeySpecException
@@ -131,7 +131,7 @@ public class GenerateKeys
 		Path path = Paths.get("/Users/Pawel/IdeaProjects/TrackFoodTruckBackend/track-food-truck/json-web-token/.tft4096");
 		byte[] bytes = Files.readAllBytes(path);
 
-		PKCS8EncodedKeySpec ks = new PKCS8EncodedKeySpec(bytes);
-		return KeyFactory.getInstance("RSA").generatePrivate(ks);
+		PKCS8EncodedKeySpec encodedKeySpec = new PKCS8EncodedKeySpec(bytes);
+		return KeyFactory.getInstance("RSA").generatePrivate(encodedKeySpec);
 	}
 }

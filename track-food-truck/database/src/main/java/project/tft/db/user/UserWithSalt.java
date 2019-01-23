@@ -17,5 +17,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UserWithSalt extends User
 {
+	public UserWithSalt(final String login, final String password)
+	{
+		super(login, password);
+	}
+
 	private String salt;
 }

@@ -1,6 +1,8 @@
 package project.tft.user.backend.controller;
 
-import org.springframework.http.ResponseEntity;
+import java.util.Optional;
+
+import org.bson.Document;
 
 import project.tft.db.user.User;
 import project.tft.db.user.UserWithSalt;
@@ -10,15 +12,19 @@ import project.tft.db.user.UserWithSalt;
  */
 public interface UserService
 {
-	ResponseEntity registerUser(User user);
+	boolean registerUserInDatabase(User user);
 
-	ResponseEntity registerUserWithHash(UserWithSalt user);
+	boolean registerUserInDatabaseWithHash(UserWithSalt user);
 
-	ResponseEntity loginUser(User user);
+	Optional<Document> findUserInDatabaseByLogin(User user);
 
-	ResponseEntity loginUserWithHash(User user);
+	Optional<Document> findHashedUserInDatabaseByLogin(User user);
 
-	void deleteAllUsers();
+	Optional<Document> findUserInDatabaseByLoginAndPassword(User user);
 
-	void deleteAllHashedUsers();
+	Optional<Document> findUserInDatabaseByLoginAndHashedPassword(User user);
+
+	void deleteAll();
+
+	void deleteAllHashed();
 }

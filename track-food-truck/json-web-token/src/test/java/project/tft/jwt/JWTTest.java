@@ -77,4 +77,14 @@ public class JWTTest
 		DecodedJWT jwt = verifier.verify(token);
 		assertThat(jwt).isNotNull();
 	}
+
+	@Test
+	public void creatingTokenForIntegrationTests()
+	{
+		StoredKeyPair keyPair = new StoredKeyPair();
+		Algorithm algorithm = Algorithm.RSA512(keyPair.getPublicKey(), keyPair.getPrivateKey());
+		String token = JWT.create().sign(algorithm);
+		System.out.println(token);
+	}
+
 }
