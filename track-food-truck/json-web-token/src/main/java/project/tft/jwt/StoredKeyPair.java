@@ -37,7 +37,7 @@ public class StoredKeyPair
 	{
 		try
 		{
-			Path path = Paths.get("/Users/Pawel/IdeaProjects/TrackFoodTruckBackend/track-food-truck/json-web-token/src/main/resources/.tft4096.pub");
+			Path path = Paths.get(".tft4096.pub");
 			byte[] bytes = Files.readAllBytes(path);
 
 			X509EncodedKeySpec encodedKeySpec = new X509EncodedKeySpec(bytes);
@@ -54,7 +54,7 @@ public class StoredKeyPair
 	{
 		try
 		{
-			Path path = Paths.get("/Users/Pawel/IdeaProjects/TrackFoodTruckBackend/track-food-truck/json-web-token/src/main/resources/.tft4096");
+			Path path = Paths.get(".tft4096");
 			byte[] bytes = Files.readAllBytes(path);
 
 			PKCS8EncodedKeySpec encodedKeySpec = new PKCS8EncodedKeySpec(bytes);
