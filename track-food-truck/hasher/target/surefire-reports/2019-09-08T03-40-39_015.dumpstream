@@ -1,0 +1,15 @@
+# Created on 2019-09-08T03:40:39.016
+WARNING: An illegal reflective access operation has occurred
+
+# Created on 2019-09-08T03:40:39.017
+WARNING: Illegal reflective access by project.tft.hasher.Hasher (file:/Users/pawel/Documents/work/TrackFoodTruckBackend/track-food-truck/hasher/target/classes/) to field java.lang.String.value
+
+# Created on 2019-09-08T03:40:39.017
+WARNING: Please consider reporting this to the maintainers of project.tft.hasher.Hasher
+
+# Created on 2019-09-08T03:40:39.017
+WARNING: Use --illegal-access=warn to enable warnings of further illegal reflective access operations
+
+# Created on 2019-09-08T03:40:39.017
+WARNING: All illegal access operations will be denied in a future release
+

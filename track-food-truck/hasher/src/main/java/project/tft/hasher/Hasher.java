@@ -1,16 +1,16 @@
 package project.tft.hasher;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import java.lang.reflect.Field;
-import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Base64;
-
-import org.springframework.stereotype.Component;
-
 import lombok.extern.slf4j.Slf4j;
-import project.tft.salter.Salter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import project.tft.salter.SalterService;
 
 /**
@@ -18,76 +18,66 @@ import project.tft.salter.SalterService;
  */
 @Component
 @Slf4j
-public class Hasher implements HasherService
-{
-	private SalterService salter;
+public class Hasher implements HasherService {
 
-	public Hasher()
-	{
-		salter = new Salter();
-	}
+    private final static String SHA_3_512 = "SHA3-512";
 
-	@Override
-	public Hash encrypt(final String toEncrypt)
-	{
-		try
-		{
-			Hash hash = new Hash();
-			MessageDigest messageDigest = MessageDigest.getInstance("SHA-512");
-			hash.setSalt(salter.generateSalt32());
-			messageDigest.update(hash.getSalt().getBytes());
-			byte[] encrypted = messageDigest.digest(toEncrypt.getBytes(StandardCharsets.UTF_8));
-			hash.setHash(Base64.getUrlEncoder().withoutPadding().encodeToString(encrypted));
-			return hash;
-		}
-		catch (NoSuchAlgorithmException e)
-		{
-			return null;
-		}
-		finally
-		{
-			clearData(toEncrypt);
-		}
-	}
+    @Autowired
+    private SalterService salter;
 
-	@Override
-	public boolean matches(final String rawPassword, final Hash hash)
-	{
-		try
-		{
-			MessageDigest messageDigest = MessageDigest.getInstance("SHA-512");
-			messageDigest.update(hash.getSalt().getBytes());
-			byte[] encrypted = messageDigest.digest(rawPassword.getBytes(StandardCharsets.UTF_8));
-			return hash.getHash().equals(Base64.getUrlEncoder().withoutPadding().encodeToString(encrypted));
-		}
-		catch (NoSuchAlgorithmException e)
-		{
-			log.error("Exception {}", e);
-		}
-		finally
-		{
-			clearData(rawPassword);
-		}
-		return false;
-	}
+    @Value("${hasher.pepper}")
+    private String PEPPER;
 
-	private void clearData(final String data)
-	{
-		if (data == null)
-		{
-			return;
-		}
+    @Override
+    public SaltedHash encrypt(final String toEncrypt) {
+        try {
+            SaltedHash saltedHash = new SaltedHash();
+            MessageDigest messageDigest = MessageDigest.getInstance(SHA_3_512);
+            saltedHash.setSalt(salter.generateSalt1024());
+            messageDigest.update(saltedHash.getSalt().getBytes());
+            messageDigest.update(PEPPER.getBytes());
 
-		try
-		{
-			Field field = String.class.getDeclaredField("value");
-			field.setAccessible(true);
-			byte[] value = (byte[]) field.get(data);
-			Arrays.fill(value, (byte) '0');
-		}
-		catch (Exception e)
-		{
-			log.error("Exception {}", e);
-		}
-	}
+            byte[] encrypted = messageDigest.digest(toEncrypt.getBytes(UTF_8));
+            saltedHash.setHash(Base64.getEncoder().withoutPadding().encodeToString(encrypted));
+            return saltedHash;
+        } catch (NoSuchAlgorithmException e) {
+            log.error("Exception {}", e.getMessage());
+            return null;
+        } finally {
+            clearData(toEncrypt);
+        }
+    }
+
+    @Override
+    public boolean matches(String rawPassword, SaltedHash saltedHash) {
+        try {
+            MessageDigest messageDigest = MessageDigest.getInstance(SHA_3_512);
+            messageDigest.update(saltedHash.getSalt().getBytes());
+            messageDigest.update(PEPPER.getBytes());
+
+            byte[] encrypted = messageDigest.digest(rawPassword.getBytes(UTF_8));
+            String calculatedHash = Base64.getEncoder().withoutPadding().encodeToString(encrypted);
+            return saltedHash.getHash().equals(calculatedHash);
+        } catch (Exception e) {
+            log.error("Exception {}", e.getMessage());
+            return false;
+        } finally {
+            clearData(rawPassword);
+            log.error(rawPassword);
+        }
+    }
+
+    private void clearData(String data) {
+        if (data == null) {
+            return;
+        }
+        try {
+            Field field = String.class.getDeclaredField("value");
+            field.setAccessible(true);
+            byte[] value = (byte[]) field.get(data);
+            Arrays.fill(value, Byte.parseByte("48"));
+        } catch (Exception e) {
+            log.error("Exception {}", e.getMessage());
+        }
+    }
 }

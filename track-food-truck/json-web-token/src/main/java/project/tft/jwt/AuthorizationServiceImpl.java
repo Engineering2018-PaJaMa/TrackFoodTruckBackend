@@ -1,56 +1,67 @@
 package project.tft.jwt;
 
-import java.util.Date;
-
-import org.apache.commons.lang3.time.DateUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import static com.auth0.jwt.algorithms.Algorithm.RSA512;
+import static org.apache.commons.lang3.time.DateUtils.addMinutes;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
-
+import java.security.interfaces.RSAPrivateKey;
+import java.security.interfaces.RSAPublicKey;
+import java.util.Date;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by Paweł Szopa on 22/01/2019
  */
 @Component
 @Slf4j
-public class AuthorizationServiceImpl implements AuthorizationService
-{
-	@Autowired
-	private StoredKeyPair keyPair;
+public class AuthorizationServiceImpl implements AuthorizationService {
 
-	@Override
-	public String generateToken(final String login)
-	{
-		Date date = new Date();
-		Algorithm algorithm = Algorithm.RSA512(keyPair.getPublicKey(), keyPair.getPrivateKey());
-		return JWT.create()
-				.withClaim("login", login)
-				.withIssuer("tft")
-				.withAudience("customer")
-				.withExpiresAt(DateUtils.addMinutes(date, 30))
-				.withNotBefore(date)
-				.sign(algorithm);
-	}
+    @Autowired
+    private StoredKeyPair keyPair;
 
-	@Override
-	public boolean validateToken(final String token)
-	{
-		try
-		{
-			Algorithm algorithm = Algorithm.RSA512(keyPair.getPublicKey(), keyPair.getPrivateKey());
-			JWTVerifier verifier = JWT.require(algorithm).build();
-			verifier.verify(token);
-			return true;
-		}
-		catch (JWTVerificationException e)
-		{
-			log.error("Exception while validating token {}", e);
-		}
-		return false;
-	}
+    @Override
+    public String generateToken(String login, String role) {
+        Date date = new Date();
+        Algorithm algorithm = RSA512((RSAPublicKey) keyPair.loadRSAPublicKey(), (RSAPrivateKey) keyPair.loadRSAPrivateKey());
+        return JWT.create()
+            .withIssuer("TrackFoodTruck")
+            .withAudience(role)
+            .withExpiresAt(addMinutes(date, 1))
+            .withNotBefore(date)
+            .sign(algorithm);
+    }
+
+    @Override
+    public TokenWithStatus validateToken(String token) {
+        DecodedJWT jwt = null;
+        try {
+            keyPair.setPrivateKey((RSAPrivateKey) keyPair.loadRSAPrivateKey());
+            keyPair.setPublicKey((RSAPublicKey) keyPair.loadRSAPublicKey());
+
+            Algorithm algorithm = RSA512(keyPair.getPublicKey(), keyPair.getPrivateKey());
+            JWTVerifier verifier = JWT.require(algorithm).build();
+            jwt = verifier.verify(token);
+
+            return new TokenWithStatus(jwt, true);
+        } catch (JWTVerificationException e) {
+            log.info("{}", e.getMessage());
+        }
+        return new TokenWithStatus(jwt, false);
+    }
+
+    @Data
+    @AllArgsConstructor
+    public class TokenWithStatus {
+
+        private DecodedJWT jwt;
+        private boolean valid;
+    }
 }

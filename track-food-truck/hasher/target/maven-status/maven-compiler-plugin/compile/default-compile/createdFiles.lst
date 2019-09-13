@@ -1,0 +1,5 @@
+project/tft/hasher/Hash.class
+project/tft/hasher/Hasher.class
+project/tft/salter/SalterService.class
+project/tft/salter/Salter.class
+project/tft/hasher/HasherService.class

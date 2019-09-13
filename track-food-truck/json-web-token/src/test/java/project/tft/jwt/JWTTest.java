@@ -15,16 +15,28 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit4.SpringRunner;
 
 /**
  * Created by Paweł Szopa on 21/01/2019
  */
+@SpringBootTest
+@RunWith(SpringRunner.class)
+@ContextConfiguration(classes = StoredKeyPair.class)
 public class JWTTest
 {
 	private static RSAPublicKey rsaPublicKey2048;
 	private static RSAPublicKey rsaPublicKey4096;
 	private static RSAPrivateKey rsaPrivateKey2048;
 	private static RSAPrivateKey rsaPrivateKey4096;
+
+	@Autowired
+	private StoredKeyPair keyPair;
 
 	@BeforeClass
 	public static void setUp() throws IOException, NoSuchAlgorithmException, InvalidKeySpecException
@@ -81,9 +93,13 @@ public class JWTTest
 	@Test
 	public void creatingTokenForIntegrationTests()
 	{
-		StoredKeyPair keyPair = new StoredKeyPair();
+		//given
+		keyPair.setPrivateKey((RSAPrivateKey) keyPair.loadRSAPrivateKey());
+		keyPair.setPublicKey((RSAPublicKey) keyPair.loadRSAPublicKey());
 		Algorithm algorithm = Algorithm.RSA512(keyPair.getPublicKey(), keyPair.getPrivateKey());
+		//when
 		String token = JWT.create().sign(algorithm);
+		//then
 		System.out.println(token);
 	}
 

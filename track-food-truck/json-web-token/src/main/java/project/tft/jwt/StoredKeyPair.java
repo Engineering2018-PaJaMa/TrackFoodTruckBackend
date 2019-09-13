@@ -10,11 +10,10 @@ import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
-
-import org.springframework.stereotype.Component;
-
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by Paweł Szopa on 21/01/2019
@@ -22,48 +21,38 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 @Data
 @Slf4j
-public class StoredKeyPair
-{
-	private RSAPublicKey publicKey;
-	private RSAPrivateKey privateKey;
+public class StoredKeyPair {
 
-	public StoredKeyPair()
-	{
-		this.publicKey = (RSAPublicKey) loadRSAPublicKey();
-		this.privateKey = (RSAPrivateKey) loadRSAPrivateKey();
-	}
+    private RSAPublicKey publicKey;
+    private RSAPrivateKey privateKey;
 
-	private PublicKey loadRSAPublicKey()
-	{
-		try
-		{
-			Path path = Paths.get(".tft4096.pub");
-			byte[] bytes = Files.readAllBytes(path);
+    @Value("${path.public_key}")
+    private String pathPublicKey;
 
-			X509EncodedKeySpec encodedKeySpec = new X509EncodedKeySpec(bytes);
-			return KeyFactory.getInstance("RSA").generatePublic(encodedKeySpec);
-		}
-		catch (Exception e)
-		{
-			log.error("Error while loading RSA public key {}", e);
-			return null;
-		}
-	}
+    @Value("${path.private_key}")
+    private String pathPrivateKey;
 
-	private PrivateKey loadRSAPrivateKey()
-	{
-		try
-		{
-			Path path = Paths.get(".tft4096");
-			byte[] bytes = Files.readAllBytes(path);
+    PublicKey loadRSAPublicKey() {
+        try {
+            byte[] bytes = Files.readAllBytes(Paths.get(pathPublicKey));
 
-			PKCS8EncodedKeySpec encodedKeySpec = new PKCS8EncodedKeySpec(bytes);
-			return KeyFactory.getInstance("RSA").generatePrivate(encodedKeySpec);
-		}
-		catch (Exception e)
-		{
-			log.error("Error while loading RSA private key {}", e);
-			return null;
-		}
-	}
+            X509EncodedKeySpec encodedKeySpec = new X509EncodedKeySpec(bytes);
+            return KeyFactory.getInstance("RSA").generatePublic(encodedKeySpec);
+        } catch (Exception e) {
+            log.error("Error while loading RSA public key {}", e.getMessage());
+            return null;
+        }
+    }
+
+    PrivateKey loadRSAPrivateKey() {
+        try {
+            byte[] bytes = Files.readAllBytes(Paths.get(pathPrivateKey));
+
+            PKCS8EncodedKeySpec encodedKeySpec = new PKCS8EncodedKeySpec(bytes);
+            return KeyFactory.getInstance("RSA").generatePrivate(encodedKeySpec);
+        } catch (Exception e) {
+            log.error("Error while loading RSA private key {}", e.getMessage());
+            return null;
+        }
+    }
 }

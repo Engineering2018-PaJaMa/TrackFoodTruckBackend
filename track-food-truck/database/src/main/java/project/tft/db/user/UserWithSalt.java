@@ -1,26 +1,32 @@
 package project.tft.db.user;
 
-import org.springframework.data.mongodb.core.mapping.Document;
-
-import lombok.AllArgsConstructor;
+import javax.validation.constraints.NotNull;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * Created by Paweł Szopa on 18/01/2019
  */
 @Document(collection = "UsersWithHash")
 @Data
-@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
-@AllArgsConstructor
-public class UserWithSalt extends User
-{
-	public UserWithSalt(final String login, final String password)
-	{
-		super(login, password);
-	}
+public class UserWithSalt {
 
-	private String salt;
+    @Id
+    public ObjectId _id;
+
+    @NotNull
+    private String login;
+
+    @NotNull
+    private String password;
+
+    private String salt;
+
+    private String token;
+
+    private String role;
 }

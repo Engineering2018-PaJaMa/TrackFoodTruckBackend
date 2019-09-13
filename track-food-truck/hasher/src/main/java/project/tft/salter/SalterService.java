@@ -14,4 +14,6 @@ public interface SalterService
 	String generateSalt256();
 
 	String generateSalt512();
+
+	String generateSalt1024();
 }

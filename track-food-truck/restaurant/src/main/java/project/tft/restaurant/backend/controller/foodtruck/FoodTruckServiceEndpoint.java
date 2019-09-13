@@ -3,7 +3,7 @@ package project.tft.restaurant.backend.controller.foodtruck;
 import static project.tft.restaurant.backend.Constants.FOOD_TRUCK_PATH;
 
 import java.util.List;
-
+import lombok.extern.slf4j.Slf4j;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import lombok.extern.slf4j.Slf4j;
 import project.tft.restaurant.backend.dto.FoodTruckProperties;
 
 /**
@@ -23,39 +21,35 @@ import project.tft.restaurant.backend.dto.FoodTruckProperties;
 @Slf4j
 @RestController
 @RequestMapping(value = FOOD_TRUCK_PATH)
-public class FoodTruckServiceEndpoint implements FoodTruckService
-{
-	@Autowired
-	private FoodTruckImpl foodTruckService;
+public class FoodTruckServiceEndpoint implements FoodTruckService {
 
-	@PutMapping
-	@Override
-	public Document createFoodTruck(@RequestBody final Document foodTruck)
-	{
-		log.info("Creating foodTruck {} in database.", foodTruck);
-		return foodTruckService.createFoodtruck(foodTruck);
-	}
+    @Autowired
+    private FoodTruckImpl foodTruckService;
 
-	@PostMapping
-	@Override
-	public Document findFoodTruck(@RequestBody final Document foodTruck)
-	{
-		log.info("Returning foodTruck {} from database.", foodTruck);
-		return foodTruckService.getFoodtruck(foodTruck);
-	}
+    @PutMapping
+    @Override
+    public Document createFoodTruck(@RequestBody final Document foodTruck) {
+        log.info("Creating foodTruck {} in database.", foodTruck);
+        return foodTruckService.createFoodtruck(foodTruck);
+    }
 
-	@PatchMapping
-	@Override
-	public Document changeFoodTruckLocation(@RequestBody final FoodTruckProperties foodTruckProperties)
-	{
-		log.info("Changing foodTruck {} location", foodTruckProperties);
-		return foodTruckService.changeFoodTruckLocation(foodTruckProperties);
-	}
+    @PostMapping
+    @Override
+    public Document findFoodTruck(@RequestBody final Document foodTruck) {
+        log.info("Returning foodTruck {} from database.", foodTruck);
+        return foodTruckService.getFoodtruck(foodTruck);
+    }
 
-	@GetMapping("/all")
-	public List<Document> findAllFoodTrucks()
-	{
-		log.info("Returning all foodTrucks from database.");
-		return foodTruckService.getAllFoodTrucks();
-	}
+    @PatchMapping
+    @Override
+    public Document changeFoodTruckLocation(@RequestBody final FoodTruckProperties foodTruckProperties) {
+        log.info("Changing foodTruck {} location", foodTruckProperties);
+        return foodTruckService.changeFoodTruckLocation(foodTruckProperties);
+    }
+
+    @GetMapping("/all")
+    public List<Document> findAllFoodTrucks() {
+        log.info("Returning all foodTrucks from database.");
+        return foodTruckService.getAllFoodTrucks();
+    }
 }

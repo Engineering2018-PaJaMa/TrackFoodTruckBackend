@@ -12,19 +12,25 @@ import project.tft.db.user.UserWithSalt;
  */
 public interface UserService
 {
-	boolean registerUserInDatabase(User user);
+	boolean registerUserInDB(User user);
 
-	boolean registerUserInDatabaseWithHash(UserWithSalt user);
+	boolean registerUserInDBWithHash(UserWithSalt user);
 
 	Optional<Document> findUserInDatabaseByLogin(User user);
 
-	Optional<Document> findHashedUserInDatabaseByLogin(User user);
+	Optional<Document> findHashedUserInDatabaseByLogin(UserWithSalt user);
 
-	Optional<Document> findUserInDatabaseByLoginAndPassword(User user);
+	Optional<Document> findUserInDBWithLoginAndPassword(User user);
 
-	Optional<Document> findUserInDatabaseByLoginAndHashedPassword(User user);
+	Optional<Document> findUserInDB(User user);
+
+	Optional<Document> findUserWithHashInDB(UserWithSalt user);
 
 	void deleteAll();
 
 	void deleteAllHashed();
+
+    String saveOrRetriveUserToken(UserWithSalt user);
+
+	String saveUserToken(UserWithSalt user, String token);
 }

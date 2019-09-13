@@ -15,4 +15,6 @@ public interface HashedUserRepository extends MongoRepository<UserWithSalt, Stri
 	Optional<Document> findByLoginAndPassword(String login, String password);
 
 	Optional<Document> findByLogin(String login);
+
+	UserWithSalt findByLogin(String login, boolean hashed);
 }

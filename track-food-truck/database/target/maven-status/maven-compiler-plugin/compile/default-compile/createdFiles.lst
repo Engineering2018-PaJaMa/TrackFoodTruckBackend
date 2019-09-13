@@ -1,0 +1,5 @@
+project/tft/db/user/UserRepository.class
+project/tft/db/user/HashedUserRepository.class
+project/tft/db/MongoDBController.class
+project/tft/db/user/UserWithSalt.class
+project/tft/db/user/User.class

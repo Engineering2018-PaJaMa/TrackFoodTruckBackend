@@ -1,12 +1,12 @@
 package project.tft.db.user;
 
 import javax.validation.constraints.NotNull;
-
-import org.springframework.data.mongodb.core.mapping.Document;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * Created by Paweł Szopa on 23/10/2018
@@ -15,19 +15,21 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class User
-{
-	public User(final String login, final String password)
-	{
-		this.login = login;
-		this.password = password;
-	}
+public class User {
 
-	@NotNull
-	private String login;
+    @Id
+    public ObjectId _id;
 
-	@NotNull
-	private String password;
+    @NotNull
+    private String login;
 
-	private String email;
+    @NotNull
+    private String password;
+
+    private String email;
+
+    public User(String login, final String password) {
+        this.login = login;
+        this.password = password;
+    }
 }

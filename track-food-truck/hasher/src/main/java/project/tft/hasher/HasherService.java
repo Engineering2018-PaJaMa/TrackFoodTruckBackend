@@ -5,7 +5,7 @@ package project.tft.hasher;
  */
 public interface HasherService
 {
-	Hash encrypt(String toEncrypt);
+	SaltedHash encrypt(String toEncrypt);
 
-	boolean matches(String rawPassword, Hash hash);
+	boolean matches(String rawPassword, SaltedHash saltedHash);
 }
