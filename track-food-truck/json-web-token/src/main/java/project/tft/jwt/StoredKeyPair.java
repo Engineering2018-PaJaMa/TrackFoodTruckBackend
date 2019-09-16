@@ -32,24 +32,24 @@ public class StoredKeyPair {
     @Value("${path.private_key}")
     private String pathPrivateKey;
 
-    PublicKey loadRSAPublicKey() {
+    RSAPublicKey loadRSAPublicKey() {
         try {
             byte[] bytes = Files.readAllBytes(Paths.get(pathPublicKey));
 
             X509EncodedKeySpec encodedKeySpec = new X509EncodedKeySpec(bytes);
-            return KeyFactory.getInstance("RSA").generatePublic(encodedKeySpec);
+            return (RSAPublicKey) KeyFactory.getInstance("RSA").generatePublic(encodedKeySpec);
         } catch (Exception e) {
             log.error("Error while loading RSA public key {}", e.getMessage());
             return null;
         }
     }
 
-    PrivateKey loadRSAPrivateKey() {
+    RSAPrivateKey loadRSAPrivateKey() {
         try {
             byte[] bytes = Files.readAllBytes(Paths.get(pathPrivateKey));
 
             PKCS8EncodedKeySpec encodedKeySpec = new PKCS8EncodedKeySpec(bytes);
-            return KeyFactory.getInstance("RSA").generatePrivate(encodedKeySpec);
+            return (RSAPrivateKey) KeyFactory.getInstance("RSA").generatePrivate(encodedKeySpec);
         } catch (Exception e) {
             log.error("Error while loading RSA private key {}", e.getMessage());
             return null;

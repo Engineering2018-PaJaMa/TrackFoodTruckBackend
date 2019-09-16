@@ -10,8 +10,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SaltedHash
-{
-	private String hash;
-	private String salt;
+public class SaltedHash {
+
+    private String hash;
+    private String salt;
 }

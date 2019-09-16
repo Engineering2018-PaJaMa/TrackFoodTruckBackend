@@ -14,36 +14,34 @@ import project.tft.salter.Salter;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = {Hasher.class, Salter.class})
-public class HasherTest
-{
-	@Autowired
-	private HasherService hasher;
+public class HasherTest {
 
-	@Test
-	public void hashingPasswordTest()
-	{
-		//given
-		 String passwordToEncrypt = "passwordToEncrypt";
+    @Autowired
+    private HasherService hasher;
 
-		//when
-		SaltedHash saltedHash = hasher.encrypt(passwordToEncrypt);
+    @Test
+    public void hashingPasswordTest() {
+        //given
+        String passwordToEncrypt = "passwordToEncrypt";
 
-		//then
-		System.out.println(saltedHash.getHash());
-		System.out.println(saltedHash.getSalt());
-		assertThat(saltedHash.getHash()).isNotEqualTo(passwordToEncrypt);
-	}
+        //when
+        SaltedHash saltedHash = hasher.encrypt(passwordToEncrypt);
 
-	@Test
-	public void matchingPasswordTest()
-	{
-		//given
-		 String passwordToEncrypt = "passwordToEncrypt";
+        //then
+        System.out.println(saltedHash.getHash());
+        System.out.println(saltedHash.getSalt());
+        assertThat(saltedHash.getHash()).isNotEqualTo(passwordToEncrypt);
+    }
 
-		//when
-		SaltedHash saltedHash = hasher.encrypt(passwordToEncrypt);
+    @Test
+    public void matchingPasswordTest() {
+        //given
+        String passwordToEncrypt = "passwordToEncrypt";
 
-		//then
-		assertThat(hasher.matches(passwordToEncrypt, saltedHash)).isTrue();
-	}
+        //when
+        SaltedHash saltedHash = hasher.encrypt(passwordToEncrypt);
+
+        //then
+        assertThat(hasher.matches(passwordToEncrypt, saltedHash)).isTrue();
+    }
 }

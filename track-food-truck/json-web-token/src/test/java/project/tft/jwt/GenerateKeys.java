@@ -13,125 +13,61 @@ import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
-import java.security.interfaces.RSAPrivateKey;
-import java.security.interfaces.RSAPublicKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
-
 import org.bson.internal.Base64;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by Paweł Szopa on 21/01/2019
  */
-public class GenerateKeys
-{
-	private RSAPublicKey rsaPublicKey2048;
-	private RSAPublicKey rsaPublicKey4096;
-	private RSAPrivateKey rsaPrivateKey2048;
-	private RSAPrivateKey rsaPrivateKey4096;
+@Component
+public class GenerateKeys {
 
-	public void generateRSAKeyPairWithSize2048() throws NoSuchAlgorithmException, IOException
-	{
-		KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
-		keyPairGenerator.initialize(2048);
-		KeyPair keyPair = keyPairGenerator.generateKeyPair();
+    public KeyPair generateRSAKeyPairWithSize(int keySize) throws NoSuchAlgorithmException, IOException {
+        KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
+        keyPairGenerator.initialize(keySize);
+        KeyPair keyPair = keyPairGenerator.generateKeyPair();
 
-		this.rsaPublicKey2048 = (RSAPublicKey) keyPair.getPublic();
-		this.rsaPrivateKey2048 = (RSAPrivateKey) keyPair.getPrivate();
+        saveToFileRSAKeyPairWithSize(keySize, keyPair);
+        saveToFileRSAKeyPairBase64WithSize(keySize, keyPair);
 
-		saveToFileRSAKeyPairWithSize2048();
-		saveToFileRSAKeyPairBase64WithSize2048();
-	}
+        return keyPair;
+    }
 
-	public void generateRSAKeyPairWithSize4096() throws NoSuchAlgorithmException, IOException
-	{
-		KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
-		keyPairGenerator.initialize(4096);
-		KeyPair keyPair = keyPairGenerator.generateKeyPair();
+    private void saveToFileRSAKeyPairWithSize(int keySize, KeyPair keyPair) throws IOException {
+        FileOutputStream fileOutputStream = new FileOutputStream(".tft" + keySize + ".pub");
+        fileOutputStream.write(keyPair.getPublic().getEncoded());
+        fileOutputStream.close();
 
-		this.rsaPublicKey4096 = (RSAPublicKey) keyPair.getPublic();
-		this.rsaPrivateKey4096 = (RSAPrivateKey) keyPair.getPrivate();
+        fileOutputStream = new FileOutputStream(".tft" + keySize);
+        fileOutputStream.write(keyPair.getPrivate().getEncoded());
+        fileOutputStream.close();
+    }
 
-		saveToFileRSAKeyPairWIthSize4096();
-		saveToFileRSAKeyPairBase64WithSize4096();
-	}
+    private void saveToFileRSAKeyPairBase64WithSize(int keySize, KeyPair keyPair) throws IOException {
+        Writer writer = new FileWriter(".tft" + keySize + ".pub.txt");
+        writer.write(Base64.encode(keyPair.getPublic().getEncoded()));
+        writer.close();
 
-	private void saveToFileRSAKeyPairWithSize2048() throws IOException
-	{
-		FileOutputStream fileOutputStream = new FileOutputStream(".tft2048.pub");
-		fileOutputStream.write(rsaPublicKey2048.getEncoded());
-		fileOutputStream.close();
+        writer = new FileWriter(".tft" + keySize + ".txt");
+        writer.write(Base64.encode(keyPair.getPrivate().getEncoded()));
+        writer.close();
+    }
 
-		fileOutputStream = new FileOutputStream(".tft2048");
-		fileOutputStream.write(rsaPrivateKey2048.getEncoded());
-		fileOutputStream.close();
-	}
+    public PublicKey loadRsaPublicKey(int keySize) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
+        Path path = Paths.get(".tft" + keySize + ".pub");
+        byte[] bytes = Files.readAllBytes(path);
+        X509EncodedKeySpec encodedKeySpec = new X509EncodedKeySpec(bytes);
+        return KeyFactory.getInstance("RSA").generatePublic(encodedKeySpec);
+    }
 
-	private void saveToFileRSAKeyPairWIthSize4096() throws IOException
-	{
-		FileOutputStream fileOutputStream = new FileOutputStream(".tft4096.pub");
-		fileOutputStream.write(rsaPublicKey4096.getEncoded());
-		fileOutputStream.close();
+    public PrivateKey loadRsaPrivateKey(int keySize) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
+        Path path = Paths.get(".tft" + keySize);
+        byte[] bytes = Files.readAllBytes(path);
 
-		fileOutputStream = new FileOutputStream(".tft4096");
-		fileOutputStream.write(rsaPrivateKey4096.getEncoded());
-		fileOutputStream.close();
-	}
-
-	private void saveToFileRSAKeyPairBase64WithSize2048() throws IOException
-	{
-		Writer writer = new FileWriter(".tft2048.pub.txt");
-		writer.write(Base64.encode(rsaPublicKey2048.getEncoded()));
-		writer.close();
-
-		writer = new FileWriter(".tft2048.txt");
-		writer.write(Base64.encode(rsaPrivateKey2048.getEncoded()));
-		writer.close();
-	}
-
-	private void saveToFileRSAKeyPairBase64WithSize4096() throws IOException
-	{
-		Writer writer = new FileWriter(".tft4096.pub.txt");
-		writer.write(Base64.encode(rsaPublicKey4096.getEncoded()));
-		writer.close();
-
-		writer = new FileWriter(".tft4096.txt");
-		writer.write(Base64.encode(rsaPrivateKey4096.getEncoded()));
-		writer.close();
-	}
-
-	public PublicKey loadRsaPublicKey2048() throws IOException, NoSuchAlgorithmException, InvalidKeySpecException
-	{
-		Path path = Paths.get(".tft2048.pub");
-		byte[] bytes = Files.readAllBytes(path);
-		X509EncodedKeySpec encodedKeySpec = new X509EncodedKeySpec(bytes);
-		return KeyFactory.getInstance("RSA").generatePublic(encodedKeySpec);
-	}
-
-	public PublicKey loadRsaPublicKey4096() throws IOException, NoSuchAlgorithmException, InvalidKeySpecException
-	{
-		Path path = Paths.get(".tft4096.pub");
-		byte[] bytes = Files.readAllBytes(path);
-		X509EncodedKeySpec encodedKeySpec = new X509EncodedKeySpec(bytes);
-		return KeyFactory.getInstance("RSA").generatePublic(encodedKeySpec);
-	}
-
-	public PrivateKey loadRsaPrivateKey2048() throws IOException, NoSuchAlgorithmException, InvalidKeySpecException
-	{
-		Path path = Paths.get(".tft2048");
-		byte[] bytes = Files.readAllBytes(path);
-
-		PKCS8EncodedKeySpec encodedKeySpec = new PKCS8EncodedKeySpec(bytes);
-		return KeyFactory.getInstance("RSA").generatePrivate(encodedKeySpec);
-	}
-
-	public PrivateKey loadRsaPrivateKey4096() throws IOException, NoSuchAlgorithmException, InvalidKeySpecException
-	{
-		Path path = Paths.get(".tft4096");
-		byte[] bytes = Files.readAllBytes(path);
-
-		PKCS8EncodedKeySpec encodedKeySpec = new PKCS8EncodedKeySpec(bytes);
-		return KeyFactory.getInstance("RSA").generatePrivate(encodedKeySpec);
-	}
+        PKCS8EncodedKeySpec encodedKeySpec = new PKCS8EncodedKeySpec(bytes);
+        return KeyFactory.getInstance("RSA").generatePrivate(encodedKeySpec);
+    }
 }

@@ -3,17 +3,7 @@ package project.tft.salter;
 /**
  * Created by Paweł Szopa on 17/01/2019
  */
-public interface SalterService
-{
-	String generateSalt32();
+public interface SalterService {
 
-	String generateSalt64();
-
-	String generateSalt128();
-
-	String generateSalt256();
-
-	String generateSalt512();
-
-	String generateSalt1024();
+    String generateSalt(int saltBytes);
 }

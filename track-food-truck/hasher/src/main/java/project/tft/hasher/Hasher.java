@@ -20,7 +20,10 @@ import project.tft.salter.SalterService;
 @Slf4j
 public class Hasher implements HasherService {
 
+//    private final static String SHA_3_512 = "SHA-256";
+//    private final static String SHA_3_512 = "SHA-512";
     private final static String SHA_3_512 = "SHA3-512";
+    private final static int SALT_SIZE = 1024;
 
     @Autowired
     private SalterService salter;
@@ -33,7 +36,7 @@ public class Hasher implements HasherService {
         try {
             SaltedHash saltedHash = new SaltedHash();
             MessageDigest messageDigest = MessageDigest.getInstance(SHA_3_512);
-            saltedHash.setSalt(salter.generateSalt1024());
+            saltedHash.setSalt(salter.generateSalt(SALT_SIZE));
             messageDigest.update(saltedHash.getSalt().getBytes());
             messageDigest.update(PEPPER.getBytes());
 
@@ -63,7 +66,6 @@ public class Hasher implements HasherService {
             return false;
         } finally {
             clearData(rawPassword);
-            log.error(rawPassword);
         }
     }
 

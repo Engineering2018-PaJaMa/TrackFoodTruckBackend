@@ -10,8 +10,10 @@ import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -37,6 +39,11 @@ public class UserServiceEndpoint {
     @Autowired
     private AuthorizationService authorizationService;
 
+    @GetMapping
+    public ResponseEntity welcome() {
+        return ok().contentType(MediaType.APPLICATION_JSON).body("{\"message\":\"Welcome to Track Food Truck application. Enjoy!\"}");
+    }
+
     @PostMapping("/new")
     public ResponseEntity registerUser(@RequestBody @Valid final User user) {
         if (userService.registerUserInDB(user)) {
@@ -45,12 +52,12 @@ public class UserServiceEndpoint {
         return unprocessableEntity().build();
     }
 
-    @PostMapping("/new/hash")
-    public ResponseEntity registerUserWithHash(@RequestBody @Valid UserWithSalt user) {
-        if (userService.registerUserInDBWithHash(user)) {
+    @PostMapping
+    public ResponseEntity loginUserWithoutHash(@RequestBody @Valid final User user) {
+        if (userService.findUserInDBWithLoginAndPassword(user).isPresent()) {
             return ok().build();
         }
-        return unprocessableEntity().build();
+        return status(UNAUTHORIZED).build();
     }
 
     @PostMapping("/new/authorize")
@@ -65,14 +72,6 @@ public class UserServiceEndpoint {
             return ok().headers(httpHeaders).build();
         }
         return unprocessableEntity().build();
-    }
-
-    @PostMapping
-    public ResponseEntity loginUserWithoutHash(@RequestBody @Valid final User user) {
-        if (userService.findUserInDBWithLoginAndPassword(user).isPresent()) {
-            return ok().build();
-        }
-        return status(UNAUTHORIZED).build();
     }
 
     @PostMapping("/authorize")

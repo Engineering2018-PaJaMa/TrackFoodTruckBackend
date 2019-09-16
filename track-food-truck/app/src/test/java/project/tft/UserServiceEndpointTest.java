@@ -35,30 +35,57 @@ public class UserServiceEndpointTest {
 
     @Test
     public void registerThenLoginOneUser() {
+        long start = System.currentTimeMillis();
         restTemplate.postForEntity("http://localhost:" + port + "/tft/user/new", new User("userLogin", "userPassword"), HttpEntity.class);
         restTemplate.postForEntity("http://localhost:" + port + "/tft/user", new User("userLogin", "userPassword"), HttpEntity.class);
+        System.out.println((System.currentTimeMillis()-start));
     }
 
     @Test
     public void registerThenLoginThousandUsers() {
+        long start = System.currentTimeMillis();
         for (int i = 0; i < 1000; i++) {
             restTemplate.postForEntity("http://localhost:" + port + "/tft/user/new", new User("userLogin" + i, "userPassword"), HttpEntity.class);
             restTemplate.postForEntity("http://localhost:" + port + "/tft/user", new User("userLogin" + i, "userPassword"), HttpEntity.class);
         }
+        System.out.println((System.currentTimeMillis()-start));
     }
-
-    @Test
-    public void registerThenLoginOneUserWithHash() {
-        restTemplate.postForEntity("http://localhost:" + port + "/tft/user/new/authorize", new User("userLogin", "userPassword"), HttpEntity.class);
-        restTemplate.postForEntity("http://localhost:" + port + "/tft/user/authorize", new User("userLogin", "userPassword"), HttpEntity.class);
-    }
-
-    @Test
-    public void registerThenLoginThousandUsersWithHashes() {
-        for (int i = 0; i < 1000; i++) {
-            restTemplate.postForEntity("http://localhost:" + port + "/tft/user/new/authorize", new User("userLogin" + i, "userPassword"), HttpEntity.class);
-            restTemplate.postForEntity("http://localhost:" + port + "/tft/user/authorize", new User("userLogin" + i, "userPassword"), HttpEntity.class);
-        }
-    }
-
+//
+//    @Test
+//    public void registerThenLoginTenThousandUsers() {
+//        long start = System.currentTimeMillis();
+//        for (int i = 0; i < 10000; i++) {
+//            restTemplate.postForEntity("http://localhost:" + port + "/tft/user/new", new User("userLogin" + i, "userPassword"), HttpEntity.class);
+//            restTemplate.postForEntity("http://localhost:" + port + "/tft/user", new User("userLogin" + i, "userPassword"), HttpEntity.class);
+//        }
+//        System.out.println((System.currentTimeMillis()-start));
+//    }
+//
+//    @Test
+//    public void registerThenLoginOneUserWithHash() {
+//        long start = System.currentTimeMillis();
+//        restTemplate.postForEntity("http://localhost:" + port + "/tft/user/new/authorize", new User("userLogin", "userPassword"), HttpEntity.class);
+//        restTemplate.postForEntity("http://localhost:" + port + "/tft/user/authorize", new User("userLogin", "userPassword"), HttpEntity.class);
+//        System.out.println((System.currentTimeMillis()-start));
+//    }
+//
+//    @Test
+//    public void registerThenLoginThousandUsersWithHashes() {
+//        long start = System.currentTimeMillis();
+//        for (int i = 0; i < 1000; i++) {
+//            restTemplate.postForEntity("http://localhost:" + port + "/tft/user/new/authorize", new User("userLogin" + i, "userPassword"), HttpEntity.class);
+//            restTemplate.postForEntity("http://localhost:" + port + "/tft/user/authorize", new User("userLogin" + i, "userPassword"), HttpEntity.class);
+//        }
+//        System.out.println((System.currentTimeMillis()-start));
+//    }
+//
+//    @Test
+//    public void registerThenLoginTenThousandUsersWithHashes() {
+//        long start = System.currentTimeMillis();
+//        for (int i = 0; i < 10000; i++) {
+//            restTemplate.postForEntity("http://localhost:" + port + "/tft/user/new/authorize", new User("userLogin" + i, "userPassword"), HttpEntity.class);
+//            restTemplate.postForEntity("http://localhost:" + port + "/tft/user/authorize", new User("userLogin" + i, "userPassword"), HttpEntity.class);
+//        }
+//        System.out.println((System.currentTimeMillis()-start));
+//    }
 }

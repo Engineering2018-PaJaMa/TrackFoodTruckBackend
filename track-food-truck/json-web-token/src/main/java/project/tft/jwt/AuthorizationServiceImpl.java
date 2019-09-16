@@ -8,8 +8,6 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
-import java.security.interfaces.RSAPrivateKey;
-import java.security.interfaces.RSAPublicKey;
 import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,7 +28,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     @Override
     public String generateToken(String login, String role) {
         Date date = new Date();
-        Algorithm algorithm = RSA512((RSAPublicKey) keyPair.loadRSAPublicKey(), (RSAPrivateKey) keyPair.loadRSAPrivateKey());
+        Algorithm algorithm = RSA512(keyPair.loadRSAPublicKey(), keyPair.loadRSAPrivateKey());
         return JWT.create()
             .withIssuer("TrackFoodTruck")
             .withAudience(role)
@@ -42,10 +40,9 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     @Override
     public TokenWithStatus validateToken(String token) {
         DecodedJWT jwt = null;
+        keyPair.setPrivateKey(keyPair.loadRSAPrivateKey());
+        keyPair.setPublicKey(keyPair.loadRSAPublicKey());
         try {
-            keyPair.setPrivateKey((RSAPrivateKey) keyPair.loadRSAPrivateKey());
-            keyPair.setPublicKey((RSAPublicKey) keyPair.loadRSAPublicKey());
-
             Algorithm algorithm = RSA512(keyPair.getPublicKey(), keyPair.getPrivateKey());
             JWTVerifier verifier = JWT.require(algorithm).build();
             jwt = verifier.verify(token);
